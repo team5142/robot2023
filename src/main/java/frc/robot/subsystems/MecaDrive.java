@@ -19,7 +19,6 @@ import com.playingwithfusion.CANVenom;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import com.playingwithfusion.CANVenom.BrakeCoastMode;
 
-
 /** Represents a mecanum drive style drivetrain. */
 public class MecaDrive extends SubsystemBase {
 //AHRS provides access to the NAVX sensors (gyrometers, inertial navigation, etc)
@@ -120,6 +119,6 @@ public class MecaDrive extends SubsystemBase {
   public void mecaDrive(double forward, double strafe, double rotation) {
     rotation2d = Rotation2d.fromDegrees(gyro.getAngle());
 
-      MecaDrive.driveCartesian(forward, strafe, rotation, gyro.getRotation2d());
+    MecaDrive.driveCartesian(forward, strafe, rotation, gyro.getRotation2d());
 }
 }
