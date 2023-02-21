@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.ButterflyDrive;
+import frc.robot.subsystems.ButterflyTankDrive;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.MecaDrive;
@@ -25,7 +25,7 @@ public class RobotContainer {
   
   public static class subsystems {
     public final static MecaDrive mecaDrive = new MecaDrive();
-    public final static ButterflyDrive butterflyDrive = new ButterflyDrive();
+    public final static ButterflyTankDrive butterflyTankDrive = new ButterflyTankDrive();
     public final static Arm arm = new Arm();
     public final static Claw claw = new Claw();
     public final static Elevator elevator = new Elevator();

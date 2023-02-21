@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.I2C.Port;
 import com.kauailabs.navx.frc.AHRS;
 import com.playingwithfusion.CANVenom;
@@ -24,8 +23,6 @@ public class MecaDrive extends SubsystemBase {
 //AHRS provides access to the NAVX sensors (gyrometers, inertial navigation, etc)
   public AHRS gyro = new AHRS(Port.kMXP);
   Rotation2d rotation2d;
-//Creates the driver controller
-  XboxController controller;
 //Creates Mecanum Drive
   MecanumDrive MecaDrive;
 //All motor controllers for the VENOM motors used in the drivetrain
@@ -103,16 +100,11 @@ public class MecaDrive extends SubsystemBase {
     m_backRightMotor.setCoast(BrakeCoastMode.Coast);
   }
 */
+
+//Resets Gyro
   public void resetGyro(){
     gyro.reset();
   }
-
-  /**
-   * Set the desired speeds for each wheel.
-   *
-   * @param speeds The desired wheel speeds.
-   */
-
   /**
    * Method to drive the robot using joystick info.
    */
