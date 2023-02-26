@@ -15,11 +15,15 @@ import edu.wpi.first.wpilibj.XboxController;
 public class ButterflyTankDrive extends SubsystemBase {
   
     private AHRS navx;
+
     private XboxController controller;
+
     private DifferentialDrive ButterflyDrive;
     
     private static final double kOffBalanceAngleThresholdDegrees = 10;
+
     private static final double kOnBalanceAngleThresholdDegrees = 5;
+    
     private boolean autoBalanceMode;
     
     public void operatorControl() {

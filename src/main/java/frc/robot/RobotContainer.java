@@ -4,13 +4,14 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Timer;
+import frc.robot.commands.ButterflyDriveCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.ButterflyPneumatics;
 import frc.robot.subsystems.ButterflyTankDrive;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Harvester;
 import frc.robot.subsystems.MecaDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.XboxController;
@@ -24,16 +25,20 @@ import edu.wpi.first.wpilibj.XboxController;
 public class RobotContainer {
   
   public static class subsystems {
-    public final static MecaDrive mecaDrive = new MecaDrive();
-    public final static ButterflyTankDrive butterflyTankDrive = new ButterflyTankDrive();
     public final static Arm arm = new Arm();
     public final static Claw claw = new Claw();
+    public final static ButterflyTankDrive butterflyTankDrive = new ButterflyTankDrive();
+    public final static ButterflyPneumatics butterflyPneumatics = new ButterflyPneumatics();
     public final static Elevator elevator = new Elevator();
+    public final static Harvester harvester = new Harvester();
+    public final static MecaDrive mecaDrive = new MecaDrive();
+
   }
 
   public static class commands {
 
     public final static DriveCommand DriveCommand = new DriveCommand();
+    public final static ButterflyDriveCommand ButterflyDriveCommand = new ButterflyDriveCommand();
 
   }
   
