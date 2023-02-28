@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 
 
@@ -26,7 +25,7 @@ public class ButterflyTankDrive extends SubsystemBase {
     
     private boolean autoBalanceMode;
     
-    public void operatorControl() {
+    public void balance() {
         
         double leftSpeed = 0;
         double rightSpeed = 0;

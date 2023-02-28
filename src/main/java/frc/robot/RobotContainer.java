@@ -6,7 +6,7 @@ package frc.robot;
 
 import frc.robot.commands.ButterflyDriveCommand;
 import frc.robot.commands.DriveCommand;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.ArmTelescope;
 import frc.robot.subsystems.ButterflyPneumatics;
 import frc.robot.subsystems.ButterflyTankDrive;
 import frc.robot.subsystems.Claw;
@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.XboxController;
 public class RobotContainer {
   
   public static class subsystems {
-    public final static Arm arm = new Arm();
+    public final static ArmTelescope arm = new ArmTelescope();
     public final static Claw claw = new Claw();
     public final static ButterflyTankDrive butterflyTankDrive = new ButterflyTankDrive();
     public final static ButterflyPneumatics butterflyPneumatics = new ButterflyPneumatics();

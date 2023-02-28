@@ -10,7 +10,6 @@ import edu.wpi.first.math.kinematics.MecanumDriveWheelPositions;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.I2C.Port;
 import com.kauailabs.navx.frc.AHRS;
@@ -22,14 +21,15 @@ import com.playingwithfusion.CANVenom.BrakeCoastMode;
 public class MecaDrive extends SubsystemBase {
 //AHRS provides access to the NAVX sensors (gyrometers, inertial navigation, etc)
   public AHRS gyro = new AHRS(Port.kMXP);
+
   Rotation2d rotation2d;
 //Creates Mecanum Drive
   MecanumDrive MecaDrive;
 //All motor controllers for the VENOM motors used in the drivetrain
-  private final MotorController m_frontLeftMotor = new CANVenom(0);
-  private final MotorController m_frontRightMotor = new CANVenom(1);
-  private final MotorController m_backLeftMotor = new CANVenom(2);
-  private final MotorController m_backRightMotor = new CANVenom(3);
+  private final CANVenom m_frontLeftMotor = new CANVenom(0);
+  private final CANVenom m_frontRightMotor = new CANVenom(1);
+  private final CANVenom m_backLeftMotor = new CANVenom(2);
+  private final CANVenom m_backRightMotor = new CANVenom(3);
 
 //All motor encoders for the VENOM motors used in the drivetrain
   private final Encoder m_frontLeftEncoder = new Encoder(0, 1);
@@ -85,21 +85,21 @@ public class MecaDrive extends SubsystemBase {
         m_backLeftEncoder.getDistance(),
         m_backRightEncoder.getDistance());
   }
-/*
+
   public void SetBrake(){
-    m_frontLeftMotor.setBrake(BrakeCoastMode.Brake);
-    m_frontRightMotor.setBrake(BrakeCoastMode.Brake);
-    m_backLeftMotor.setBrake(BrakeCoastMode.Brake);
-    m_backRightMotor.setBrake(BrakeCoastMode.Brake);
+    m_frontLeftMotor.setBrakeCoastMode(BrakeCoastMode.Brake);
+    m_frontRightMotor.setBrakeCoastMode(BrakeCoastMode.Brake);
+    m_backLeftMotor.setBrakeCoastMode(BrakeCoastMode.Brake);
+    m_backRightMotor.setBrakeCoastMode(BrakeCoastMode.Brake);
   }
   
   public void setCoast(){
-    m_frontLeftMotor.BrakeCoastMode(BrakeCoastMode.Coast);
-    m_frontRightMotor.setCoast(BrakeCoastMode.Coast);
-    m_backLeftMotor.setCoast(BrakeCoastMode.Coast);
-    m_backRightMotor.setCoast(BrakeCoastMode.Coast);
+    m_frontLeftMotor.setBrakeCoastMode(BrakeCoastMode.Coast);
+    m_frontRightMotor.setBrakeCoastMode(BrakeCoastMode.Coast);
+    m_backLeftMotor.setBrakeCoastMode(BrakeCoastMode.Coast);
+    m_backRightMotor.setBrakeCoastMode(BrakeCoastMode.Coast);
   }
-*/
+  
 
 //Resets Gyro
   public void resetGyro(){
