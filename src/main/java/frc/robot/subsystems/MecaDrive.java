@@ -20,7 +20,7 @@ import com.playingwithfusion.CANVenom.BrakeCoastMode;
 /** Represents a mecanum drive style drivetrain. */
 public class MecaDrive extends SubsystemBase {
 //AHRS provides access to the NAVX sensors (gyrometers, inertial navigation, etc)
-  public AHRS gyro = new AHRS(Port.kMXP);
+  public AHRS m_gyro = new AHRS(Port.kMXP);
 
   Rotation2d rotation2d;
 //Creates Mecanum Drive
@@ -37,8 +37,6 @@ public class MecaDrive extends SubsystemBase {
   private final Encoder m_backLeftEncoder = new Encoder(4, 5);
   private final Encoder m_backRightEncoder = new Encoder(6, 7);
 
-//The gyrometer
-  private final AnalogGyro m_gyro = new AnalogGyro(0);
 //  Constructs a MecanumDrive and resets the gyro.
   public MecaDrive() {
     m_gyro.reset();
@@ -50,15 +48,15 @@ public class MecaDrive extends SubsystemBase {
   }
 
   public double getGyroAngle(){
-    return gyro.getAngle();
+    return m_gyro.getAngle();
   }
 
   public double getGyroPitch(){
-    return gyro.getPitch();
+    return m_gyro.getPitch();
   }
 
   public double getGyroRoll(){
-    return gyro.getRoll();
+    return m_gyro.getRoll();
   }
   /**
    * Returns the current state of the drivetrain.
@@ -103,14 +101,14 @@ public class MecaDrive extends SubsystemBase {
 
 //Resets Gyro
   public void resetGyro(){
-    gyro.reset();
+    m_gyro.reset();
   }
   /**
    * Method to drive the robot using joystick info.
    */
   public void mecaDrive(double forward, double strafe, double rotation) {
-    rotation2d = Rotation2d.fromDegrees(gyro.getAngle());
+    rotation2d = Rotation2d.fromDegrees(m_gyro.getAngle());
 
-    MecaDrive.driveCartesian(forward, strafe, rotation, gyro.getRotation2d());
+    MecaDrive.driveCartesian(forward, strafe, rotation, m_gyro.getRotation2d());
 }
 }
