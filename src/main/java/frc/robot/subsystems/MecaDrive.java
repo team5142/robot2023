@@ -8,7 +8,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelPositions;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.I2C.Port;
@@ -26,10 +25,10 @@ public class MecaDrive extends SubsystemBase {
 //Creates Mecanum Drive
   MecanumDrive MecaDrive;
 //All motor controllers for the VENOM motors used in the drivetrain
-  private final CANVenom m_frontLeftMotor = new CANVenom(0);
-  private final CANVenom m_frontRightMotor = new CANVenom(1);
-  private final CANVenom m_backLeftMotor = new CANVenom(2);
-  private final CANVenom m_backRightMotor = new CANVenom(3);
+  private CANVenom m_frontLeftMotor;
+  private CANVenom m_frontRightMotor;
+  private CANVenom m_backLeftMotor;
+  private CANVenom m_backRightMotor;
 
 //All motor encoders for the VENOM motors used in the drivetrain
   private final Encoder m_frontLeftEncoder = new Encoder(0, 1);
@@ -40,7 +39,11 @@ public class MecaDrive extends SubsystemBase {
 //  Constructs a MecanumDrive and resets the gyro.
   public MecaDrive() {
     m_gyro.reset();
-//Inverts the FR motor
+    m_frontLeftMotor = new CANVenom(0);
+    m_frontRightMotor = new CANVenom(1);
+    m_backLeftMotor = new CANVenom(2);
+    m_backRightMotor = new CANVenom(3);
+    //Inverts the FR motor
     m_frontRightMotor.setInverted(true);
 //Inverts the BR motor
     m_backRightMotor.setInverted(true);

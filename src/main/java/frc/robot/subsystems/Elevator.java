@@ -19,9 +19,9 @@ public class Elevator extends SubsystemBase {
   private static final double kF = 0.0;
   private static final double kTolerance = 0.5;
   
-  private static final int kEncoderCountsPerInch = 4096;
-  private static final int kMaxEncoderCounts = 10000;
-  private static final int kMinEncoderCounts = 0;
+  private static final int kElevatorEncoderCountsPerInch = 4096;
+  private static final int kElevatorMaxEncoderCounts = 10000;
+  private static final int kElevatorMinEncoderCounts = 0;
 
   // Define the elevator motor and encoder
   private CANVenom elevatorMotor;
@@ -37,7 +37,7 @@ public class Elevator extends SubsystemBase {
     elevatorEncoder = new Encoder(11,12);
 
      // Set the encoder distance per pulse
-     elevatorEncoder.setDistancePerPulse(1.0 / kEncoderCountsPerInch);
+     elevatorEncoder.setDistancePerPulse(1.0 / kElevatorEncoderCountsPerInch);
 
      // Set the PID controller for the elevator
     elevatorPID = new PIDController(kP, kI, kD, kF);
@@ -48,10 +48,10 @@ public class Elevator extends SubsystemBase {
   public void setElevatorPosition(double positionInches) {
 
     // Limit the setpoint to the allowable range
-    positionInches = Math.max(Math.min(positionInches, kMaxEncoderCounts / kEncoderCountsPerInch), kMinEncoderCounts / kEncoderCountsPerInch);
+    positionInches = Math.max(Math.min(positionInches, kElevatorMaxEncoderCounts / kElevatorEncoderCountsPerInch), kElevatorMinEncoderCounts / kElevatorEncoderCountsPerInch);
     
     // Convert the setpoint to encoder counts
-    int positionEncoderCounts = (int) (positionInches * kEncoderCountsPerInch);
+    int positionEncoderCounts = (int) (positionInches * kElevatorEncoderCountsPerInch);
     
     // Set the setpoint for the PID controller
     elevatorPID.setSetpoint(positionEncoderCounts);

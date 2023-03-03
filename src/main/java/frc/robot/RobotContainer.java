@@ -16,6 +16,7 @@ import frc.robot.subsystems.Harvester;
 import frc.robot.subsystems.MecaDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -45,7 +46,7 @@ public class RobotContainer {
   }
   
   public static XboxController driverController = new XboxController(0);
-  public static XboxController operatorController = new XboxController(1);
+  public static Joystick operatorController = new Joystick(1);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
