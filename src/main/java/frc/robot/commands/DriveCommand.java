@@ -8,9 +8,17 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.RobotContainer.subsystems;
+import com.playingwithfusion.CANVenom;
+import frc.robot.subsystems.MecaDrive;
 
 public class DriveCommand extends CommandBase {
-  /** Creates a new XDrive. */
+  /** Creates a new DriveCommand. */
+
+  private CANVenom m_frontLeftMotor;
+  private CANVenom m_frontRightMotor;
+  private CANVenom m_backLeftMotor;
+  private CANVenom m_backRightMotor;
+
   public DriveCommand() {
 
     addRequirements(subsystems.mecaDrive);
@@ -20,6 +28,11 @@ public class DriveCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_frontLeftMotor = new CANVenom(0);
+    m_frontRightMotor = new CANVenom(1);
+    m_backLeftMotor = new CANVenom(2);
+    m_backRightMotor = new CANVenom(3);
+
     subsystems.mecaDrive.SetBrake();
   }
 
