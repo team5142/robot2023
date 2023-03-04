@@ -114,4 +114,8 @@ public class MecaDrive extends SubsystemBase {
 
     MecaDrive.driveCartesian(forward, strafe, rotation, m_gyro.getRotation2d());
 }
+  @Override
+  public void periodic() {
+  // This method will be called once per scheduler run
+}
 }
