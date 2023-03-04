@@ -37,10 +37,13 @@ public class Drivetrain extends SubsystemBase {
     m_backRight = new CANVenom(3);
     m_elev = new CANVenom(4);
 
+    m_frontRight.setInverted(true);
+    m_backRight.setInverted(true);
+    setBrake();
     m_drive = new MecanumDrive(m_frontLeft, m_backLeft, m_frontRight, m_backRight);
   }
 
-  public void SetBrake() {
+  public void setBrake() {
     m_frontLeft.setBrakeCoastMode(BrakeCoastMode.Brake);
     m_frontRight.setBrakeCoastMode(BrakeCoastMode.Brake);
     m_backLeft.setBrakeCoastMode(BrakeCoastMode.Brake);
@@ -71,9 +74,9 @@ public class Drivetrain extends SubsystemBase {
   // }
   
 
-  public void drive(double forward, double strafe, double rotation) {
+  public void drive(double xSpeed, double ySpeed, double rot) {
     // rotation2d = Rotation2d.fromDegrees(m_gyro.getAngle());
-    m_drive.driveCartesian(forward, strafe, rotation);
+    m_drive.driveCartesian(-xSpeed, ySpeed, -rot);
 
     // m_drive.driveCartesian(forward, strafe, rotation, m_gyro.getRotation2d());
   }
