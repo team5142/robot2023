@@ -4,34 +4,33 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.RobotContainer.subsystems;
+import frc.robot.subsystems.Drivetrain;
 
-public class ButterflyDriveCommand extends CommandBase {
-  /** Creates a new ButterflyDriveCommand. */
-
-  public ButterflyDriveCommand() {
+public class MainDrive extends CommandBase {
+  private final Drivetrain m_drive;
+  private final DoubleSupplier m_x, m_y, m_z;
+  /** Creates a new MainDrive. */
+  public MainDrive(Drivetrain drive, DoubleSupplier x, DoubleSupplier y, DoubleSupplier z) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystems.butterflyTankDrive);
-    addRequirements(subsystems.butterflyPneumatics);
+    m_drive = drive;
+    m_x = x;
+    m_y = y;
+    m_z = z;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    subsystems.butterflyPneumatics.retract();
+    m_drive.resetGyro();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(RobotContainer.driverController.getYButton() == true){
-      subsystems.butterflyPneumatics.extend();
-      Timer.delay(0.25);
-      subsystems.butterflyTankDrive.balance();
-  }
+    m_drive.drive(m_x.getAsDouble(), m_y.getAsDouble(), m_z.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

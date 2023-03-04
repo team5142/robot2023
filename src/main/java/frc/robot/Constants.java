@@ -3,8 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-//import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-//import edu.wpi.first.math.util.Units;
+// import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+// import edu.wpi.first.math.util.Units;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -23,52 +23,52 @@ public final class Constants {
 
     public static final int kOpertatorControllerPort = 1;
   }
-      
-      public static class DrivetrainConstants {
-        public static final int wheelDiameter = 8; // inches
-      }
 
-      public static class ArmConstants {
-        private static final int highConeSwivelAngle = 0;
-        private static final int lowConeSwivelAngle= 0;
-        private static final int highCubeSwivelAngle = 0;
-        private static final int lowCubeSwivelAngle = 0;
-        private static final int groundHubSwivelAngle = 0;
-        private static final int collectSwivelAngle = 0;
-        private static final int substationSwivelAngle = 0;
-        private static final int genericSwivelAngle = 0;
-        private static final double kMinArmDistance = 0.0;
-        private static final double kMaxArmDistance = 20.0;
-      }
-
-      public static class ElevatorConstants {
-        private static final int kElevatorEncoderCountsPerInch = 4096;
-        private static final int kElevatorMaxEncoderCounts = 10000;
-        private static final int kElevatorMinEncoderCounts = 0;
-      }
-    
-      // follow CAN IDs in ascending order
-      public static class CAN_IDs{
-        //drive IDs
-        public static final int frontLeftMotorID = 0;
-        public static final int frontRightMotorID = 1;
-        public static final int backLefttMotorID = 2;
-        public static final int backRightMotorID = 3;
-        
-        //elevator ID
-        public static final int elevatorMotorID = 4;
-
-        //PDP ID
-        public static final int powerDistributionPanelID = 5;
-    
-        //PCM ID
-        public static final int pneumaticsControlModuleID = 6;
-
-        //arm IDs
-        public static final int SwivelID = 7;
-        public static final int TelescopeID = 8;
-
-        //Harvester ID
-        public static final int harvesterID = 9;
-    }
+  public static class DrivetrainConstants {
+    public static final int wheelDiameter = 8; // inches
   }
+
+  public static class ArmConstants {
+    private static final int highConeSwivelAngle = 0;
+    private static final int lowConeSwivelAngle = 0;
+    private static final int highCubeSwivelAngle = 0;
+    private static final int lowCubeSwivelAngle = 0;
+    private static final int groundHubSwivelAngle = 0;
+    private static final int collectSwivelAngle = 0;
+    private static final int substationSwivelAngle = 0;
+    private static final int genericSwivelAngle = 0;
+    private static final double kMinArmDistance = 0.0;
+    private static final double kMaxArmDistance = 20.0;
+  }
+
+  public static class ElevatorConstants {
+    private static final int kElevatorEncoderCountsPerInch = 4096;
+    private static final int kElevatorMaxEncoderCounts = 10000;
+    private static final int kElevatorMinEncoderCounts = 0;
+  }
+
+  // follow CAN IDs in ascending order
+  public static class CAN_IDs {
+    // drive IDs
+    public static final int frontLeftMotorID = 0;
+    public static final int frontRightMotorID = 1;
+    public static final int backLefttMotorID = 2;
+    public static final int backRightMotorID = 3;
+
+    // elevator ID
+    public static final int elevatorMotorID = 4;
+
+    // PDP ID
+    public static final int powerDistributionPanelID = 5;
+
+    // PCM ID
+    public static final int pneumaticsControlModuleID = 6;
+
+    // arm IDs
+    public static final int SwivelID = 7;
+    public static final int TelescopeID = 8;
+
+    // Harvester ID
+    public static final int harvesterID = 9;
+  }
+}
