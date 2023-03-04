@@ -93,4 +93,7 @@ public class MecaDrive extends SubsystemBase {
 
     MecaDrive.driveCartesian(forward, strafe, rotation, m_gyro.getRotation2d());
   }
+
+  public static void driveCartesian(double forward, double strafe, double rotation, Rotation2d rotation2d2) {
+  }
 }

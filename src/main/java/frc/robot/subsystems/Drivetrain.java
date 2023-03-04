@@ -5,9 +5,14 @@
 package frc.robot.subsystems;
 
 import com.playingwithfusion.CANVenom;
+import com.playingwithfusion.CANVenom.BrakeCoastMode;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.math.geometry.Rotation2d;
+
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
@@ -18,6 +23,11 @@ public class Drivetrain extends SubsystemBase {
   
   private final MecanumDrive m_drive;
 
+  private Rotation2d rotation2d;
+
+  // AHRS provides access to the NAVX sensors (gyrometers, inertial navigation, etc)
+  private AHRS m_gyro = new AHRS(Port.kMXP);
+
   public Drivetrain() {
     m_frontLeft = new CANVenom(0);
     m_frontRight = new CANVenom(1);
@@ -27,8 +37,38 @@ public class Drivetrain extends SubsystemBase {
     m_drive = new MecanumDrive(m_frontLeft, m_backLeft, m_frontRight, m_backRight);
   }
 
-  public void drive(double forward, double rot) {
-    m_drive.driveCartesian(forward, rot, 0);
+  public void SetBrake() {
+    m_frontLeft.setBrakeCoastMode(BrakeCoastMode.Brake);
+    m_frontRight.setBrakeCoastMode(BrakeCoastMode.Brake);
+    m_backLeft.setBrakeCoastMode(BrakeCoastMode.Brake);
+    m_backRight.setBrakeCoastMode(BrakeCoastMode.Brake);
+  }
+
+  public void setCoast() {
+    m_frontLeft.setBrakeCoastMode(BrakeCoastMode.Coast);
+    m_frontRight.setBrakeCoastMode(BrakeCoastMode.Coast);
+    m_backLeft.setBrakeCoastMode(BrakeCoastMode.Coast);
+    m_backRight.setBrakeCoastMode(BrakeCoastMode.Coast);
+  }
+
+  public double getGyroAngle() {
+    return m_gyro.getAngle();
+  }
+
+  public double getGyroPitch() {
+    return m_gyro.getPitch();
+  }
+
+  public double getGyroRoll() {
+    return m_gyro.getRoll();
+  }
+  
+
+  public void drive(double forward, double strafe, double rotation) {
+    m_drive.driveCartesian(forward, strafe, rotation);
+    rotation2d = Rotation2d.fromDegrees(m_gyro.getAngle());
+
+    MecaDrive.driveCartesian(forward, strafe, rotation, m_gyro.getRotation2d());
   }
 
 
