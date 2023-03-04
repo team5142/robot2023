@@ -10,6 +10,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.math.geometry.Rotation2d;
 
@@ -26,7 +27,7 @@ public class Drivetrain extends SubsystemBase {
   private Rotation2d rotation2d;
 
   // AHRS provides access to the NAVX sensors (gyrometers, inertial navigation, etc)
-  private AHRS m_gyro = new AHRS(Port.kMXP);
+  private AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
   public Drivetrain() {
     m_frontLeft = new CANVenom(0);
@@ -62,13 +63,16 @@ public class Drivetrain extends SubsystemBase {
   public double getGyroRoll() {
     return m_gyro.getRoll();
   }
+
+  public void resetGyro() {
+    m_gyro.reset();
+  }
   
 
   public void drive(double forward, double strafe, double rotation) {
-    m_drive.driveCartesian(forward, strafe, rotation);
     rotation2d = Rotation2d.fromDegrees(m_gyro.getAngle());
 
-    MecaDrive.driveCartesian(forward, strafe, rotation, m_gyro.getRotation2d());
+    m_drive.driveCartesian(forward, strafe, rotation, m_gyro.getRotation2d());
   }
 
 

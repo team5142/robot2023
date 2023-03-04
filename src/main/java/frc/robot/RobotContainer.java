@@ -7,8 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.commands.MainDrive;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.MecaDrive;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -18,6 +19,7 @@ import frc.robot.subsystems.MecaDrive;
  */
 public class RobotContainer {
   private final Drivetrain m_drive = new Drivetrain();
+  // private final MainDrive m_mec = new MainDrive(m_drive, null, null, null)
 
   public static XboxController driverController = new XboxController(0);
   public static Joystick operatorController = new Joystick(1);
@@ -26,6 +28,15 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+
+    m_drive.setDefaultCommand(
+      new RunCommand(
+        () ->
+          m_drive.drive(
+            -driverController.getLeftY(),
+            -driverController.getRightX(), 
+            -driverController.getLeftX()),
+        m_drive));
   }
 
   private void configureBindings() {}
