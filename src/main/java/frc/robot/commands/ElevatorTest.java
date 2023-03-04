@@ -4,39 +4,34 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.RobotContainer.subsystems;
+import frc.robot.subsystems.Elevator;
 
-public class ButterflyDriveCommand extends CommandBase {
-  /** Creates a new ButterflyDriveCommand. */
+public class ElevatorTest extends CommandBase {
+  /** Creates a new ElevatorTest. */
+  private final Elevator m_elevator;
 
-  public ButterflyDriveCommand() {
+  public ElevatorTest(Elevator elevator) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystems.butterflyTankDrive);
-    addRequirements(subsystems.butterflyPneumatics);
+    m_elevator = elevator;
+    addRequirements(m_elevator);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    subsystems.butterflyPneumatics.retract();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(RobotContainer.driverController.getYButton() == true){
-      subsystems.butterflyPneumatics.extend();
-      Timer.delay(0.25);
-      subsystems.butterflyTankDrive.balance();
-  }
+    m_elevator.runElevator();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_elevator.stopElevator();
+  }
 
   // Returns true when the command should end.
   @Override
