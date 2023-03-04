@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -19,6 +20,10 @@ import frc.robot.subsystems.Drivetrain;
  */
 public class RobotContainer {
   private final Drivetrain m_drive = new Drivetrain();
+  private final Elevator m_elevator = new Elevator();
+  private final RunCommand m_topElevator = new RunCommand(
+      () ->
+        m_elevator.toTop(), m_elevator);
   // private final MainDrive m_mec = new MainDrive(m_drive, null, null, null)
 
   public static Joystick driver = new Joystick(0);
