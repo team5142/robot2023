@@ -21,19 +21,21 @@ public class Drivetrain extends SubsystemBase {
   private final CANVenom m_frontRight;
   private final CANVenom m_backLeft;
   private final CANVenom m_backRight;
+  private final CANVenom m_elev;
   
   private final MecanumDrive m_drive;
 
   private Rotation2d rotation2d;
 
   // AHRS provides access to the NAVX sensors (gyrometers, inertial navigation, etc)
-  private AHRS m_gyro = new AHRS(SPI.Port.kMXP);
+  // private AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
   public Drivetrain() {
     m_frontLeft = new CANVenom(0);
     m_frontRight = new CANVenom(1);
     m_backLeft = new CANVenom(2);
     m_backRight = new CANVenom(3);
+    m_elev = new CANVenom(4);
 
     m_drive = new MecanumDrive(m_frontLeft, m_backLeft, m_frontRight, m_backRight);
   }
@@ -52,27 +54,28 @@ public class Drivetrain extends SubsystemBase {
     m_backRight.setBrakeCoastMode(BrakeCoastMode.Coast);
   }
 
-  public double getGyroAngle() {
-    return m_gyro.getAngle();
-  }
+  // public double getGyroAngle() {
+  //   return m_gyro.getAngle();
+  // }
 
-  public double getGyroPitch() {
-    return m_gyro.getPitch();
-  }
+  // public double getGyroPitch() {
+  //   return m_gyro.getPitch();
+  // }
 
-  public double getGyroRoll() {
-    return m_gyro.getRoll();
-  }
+  // public double getGyroRoll() {
+  //   return m_gyro.getRoll();
+  // }
 
-  public void resetGyro() {
-    m_gyro.reset();
-  }
+  // public void resetGyro() {
+  //   m_gyro.reset();
+  // }
   
 
   public void drive(double forward, double strafe, double rotation) {
-    rotation2d = Rotation2d.fromDegrees(m_gyro.getAngle());
+    // rotation2d = Rotation2d.fromDegrees(m_gyro.getAngle());
+    m_drive.driveCartesian(forward, strafe, rotation);
 
-    m_drive.driveCartesian(forward, strafe, rotation, m_gyro.getRotation2d());
+    // m_drive.driveCartesian(forward, strafe, rotation, m_gyro.getRotation2d());
   }
 
 
