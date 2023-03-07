@@ -5,11 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Swivel;
 
-public class ConeCubePlacement extends CommandBase {
-  /** Creates a new LowerHubPlacement. */
-  public ConeCubePlacement() {
+public class SwivelDownMan extends CommandBase {
+  /** Creates a new SwivelUpMan. */
+  private final Swivel m_swivel;
+  public SwivelDownMan(Swivel swiv) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_swivel = swiv;
+    addRequirements(swiv);
   }
 
   // Called when the command is initially scheduled.
@@ -18,11 +22,15 @@ public class ConeCubePlacement extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_swivel.swivelDown();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_swivel.stop();
+  }
 
   // Returns true when the command should end.
   @Override

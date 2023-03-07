@@ -8,9 +8,19 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.ElevatorDownMan;
+import frc.robot.commands.ElevatorUpMan;
+import frc.robot.commands.PushButterfly;
+import frc.robot.commands.RetractButterfly;
+import frc.robot.commands.SwivelDownMan;
+import frc.robot.commands.SwivelUpMan;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Swivel;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,13 +31,11 @@ import frc.robot.subsystems.Elevator;
 public class RobotContainer {
   private final Drivetrain m_drive = new Drivetrain();
   private final Elevator m_elevator = new Elevator();
-  private final RunCommand m_topElevator = new RunCommand(
-      () ->
-        m_elevator.toTop(), m_elevator);
-  // private final MainDrive m_mec = new MainDrive(m_drive, null, null, null)
+  private final Swivel m_swivel = new Swivel();
 
-  public static Joystick driver = new Joystick(0);
+  private static Joystick driver = new Joystick(0);
   public static Joystick operatorController = new Joystick(1);
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -44,7 +52,21 @@ public class RobotContainer {
         m_drive));
   }
 
-  private void configureBindings() {}
+  private void configureBindings() {
+    final JoystickButton yButton = new JoystickButton(driver, 4);
+    final JoystickButton aButton = new JoystickButton(driver, 2);
+    final JoystickButton rTrig = new JoystickButton(driver, 8);
+    final JoystickButton rButt = new JoystickButton(driver, 6);
+    final JoystickButton lTrig = new JoystickButton(driver, 7);
+    final JoystickButton lButt = new JoystickButton(driver, 5);
+
+    aButton.onTrue(new PushButterfly(m_drive));
+    yButton.onTrue(new RetractButterfly(m_drive));
+    rTrig.whileTrue(new ElevatorUpMan(m_elevator));
+    rButt.whileTrue(new ElevatorDownMan(m_elevator));
+    lTrig.whileTrue(new SwivelUpMan(m_swivel));
+    lButt.whileTrue(new SwivelDownMan(m_swivel));
+  }
 
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous

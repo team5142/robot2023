@@ -10,7 +10,10 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.math.geometry.Rotation2d;
 
@@ -21,9 +24,10 @@ public class Drivetrain extends SubsystemBase {
   private final CANVenom m_frontRight;
   private final CANVenom m_backLeft;
   private final CANVenom m_backRight;
-  private final CANVenom m_elev;
   
   private final MecanumDrive m_drive;
+
+  private final DoubleSolenoid m_butterfly;
 
   private Rotation2d rotation2d;
 
@@ -35,12 +39,12 @@ public class Drivetrain extends SubsystemBase {
     m_frontRight = new CANVenom(1);
     m_backLeft = new CANVenom(2);
     m_backRight = new CANVenom(3);
-    m_elev = new CANVenom(4);
 
     m_frontRight.setInverted(true);
     m_backRight.setInverted(true);
     setBrake();
     m_drive = new MecanumDrive(m_frontLeft, m_backLeft, m_frontRight, m_backRight);
+    m_butterfly = new DoubleSolenoid(6, PneumaticsModuleType.CTREPCM, 0, 3);
   }
 
   public void setBrake() {
@@ -50,11 +54,12 @@ public class Drivetrain extends SubsystemBase {
     m_backRight.setBrakeCoastMode(BrakeCoastMode.Brake);
   }
 
-  public void setCoast() {
-    m_frontLeft.setBrakeCoastMode(BrakeCoastMode.Coast);
-    m_frontRight.setBrakeCoastMode(BrakeCoastMode.Coast);
-    m_backLeft.setBrakeCoastMode(BrakeCoastMode.Coast);
-    m_backRight.setBrakeCoastMode(BrakeCoastMode.Coast);
+  public void pushButterfly() {
+    m_butterfly.set(Value.kForward);
+  }
+
+  public void retractButterfly() {
+    m_butterfly.set(Value.kReverse);
   }
 
   // public double getGyroAngle() {
