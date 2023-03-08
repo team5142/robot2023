@@ -27,6 +27,8 @@ public class Drivetrain extends SubsystemBase {
 
   private Rotation2d rotation2d;
 
+  private Boolean m_isButterfly;
+
   // AHRS provides access to the NAVX sensors (gyrometers, inertial navigation, etc)
   // private AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
@@ -41,6 +43,9 @@ public class Drivetrain extends SubsystemBase {
     setBrake();
     m_drive = new MecanumDrive(m_frontLeft, m_backLeft, m_frontRight, m_backRight);
     m_butterfly = new DoubleSolenoid(6, PneumaticsModuleType.CTREPCM, 0, 3);
+    retractButterfly();
+    m_isButterfly = false;
+
   }
 
   public void setBrake() {
@@ -50,12 +55,22 @@ public class Drivetrain extends SubsystemBase {
     m_backRight.setBrakeCoastMode(BrakeCoastMode.Brake);
   }
 
-  public void pushButterfly() {
+  private void pushButterfly() {
+    m_butterfly.set(Value.kReverse);
+    m_isButterfly = true;
+  }
+  
+  private void retractButterfly() {
     m_butterfly.set(Value.kForward);
+    m_isButterfly = false;
   }
 
-  public void retractButterfly() {
-    m_butterfly.set(Value.kReverse);
+  public void toggleButterfly() {
+    if (m_isButterfly == true) {
+      retractButterfly();
+    } else {
+      pushButterfly();
+    }
   }
 
   // public double getGyroAngle() {
@@ -76,7 +91,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void drive(double xSpeed, double ySpeed, double rot) {
     // rotation2d = Rotation2d.fromDegrees(m_gyro.getAngle());
-    m_drive.driveCartesian(-xSpeed, -ySpeed, -rot);
+    m_drive.driveCartesian(-xSpeed, ySpeed, rot);
 
     // m_drive.driveCartesian(forward, strafe, rotation, m_gyro.getRotation2d());
   }

@@ -10,10 +10,10 @@ import frc.robot.subsystems.Drivetrain;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class PushButterfly extends InstantCommand {
+public class ToggleButterfly extends InstantCommand {
   private final Drivetrain m_drive;
-
-  public PushButterfly(Drivetrain drive) {
+  public ToggleButterfly(Drivetrain drive) {
+    // Use addRequirements() here to declare subsystem dependencies.
     m_drive = drive;
     addRequirements(drive);
   }
@@ -21,6 +21,6 @@ public class PushButterfly extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_drive.pushButterfly();
+    m_drive.toggleButterfly();
   }
 }

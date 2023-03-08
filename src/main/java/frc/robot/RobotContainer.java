@@ -10,10 +10,9 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ElevatorDownMan;
 import frc.robot.commands.ElevatorUpMan;
-import frc.robot.commands.PushButterfly;
-import frc.robot.commands.RetractButterfly;
 import frc.robot.commands.SwivelDownMan;
 import frc.robot.commands.SwivelUpMan;
+import frc.robot.commands.ToggleButterfly;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Swivel;
@@ -30,7 +29,8 @@ public class RobotContainer {
   private final Swivel m_swivel = new Swivel();
 
   private static Joystick driver = new Joystick(0);
-  public static Joystick operatorController = new Joystick(1);
+  private static Joystick secDriver = new Joystick(1);
+  public static Joystick operatorController = new Joystick(2);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -39,24 +39,15 @@ public class RobotContainer {
 
     m_drive.setDefaultCommand(
         new RunCommand(
-            () -> m_drive.drive(driver.getRawAxis(1), driver.getRawAxis(0), driver.getRawAxis(2)),
+            () -> m_drive.drive(driver.getRawAxis(1), driver.getRawAxis(0), secDriver.getRawAxis(0)),
             m_drive));
   }
 
   private void configureBindings() {
-    final JoystickButton yButton = new JoystickButton(driver, 4);
-    final JoystickButton aButton = new JoystickButton(driver, 2);
-    final JoystickButton rTrig = new JoystickButton(driver, 8);
-    final JoystickButton rButt = new JoystickButton(driver, 6);
-    final JoystickButton lTrig = new JoystickButton(driver, 7);
-    final JoystickButton lButt = new JoystickButton(driver, 5);
+    final JoystickButton driverRightThumb = new JoystickButton(secDriver, 2);
 
-    aButton.onTrue(new PushButterfly(m_drive));
-    yButton.onTrue(new RetractButterfly(m_drive));
-    rTrig.whileTrue(new ElevatorUpMan(m_elevator));
-    rButt.whileTrue(new ElevatorDownMan(m_elevator));
-    lTrig.whileTrue(new SwivelUpMan(m_swivel));
-    lButt.whileTrue(new SwivelDownMan(m_swivel));
+
+    driverRightThumb.onTrue(new ToggleButterfly(m_drive));
   }
 
   public Command getAutonomousCommand() {
