@@ -6,25 +6,21 @@ package frc.robot.subsystems;
 
 import com.playingwithfusion.CANVenom;
 import com.playingwithfusion.CANVenom.BrakeCoastMode;
-import com.kauailabs.navx.frc.AHRS;
-
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.math.geometry.Rotation2d;
-
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
   private final CANVenom m_frontLeft;
+
   private final CANVenom m_frontRight;
   private final CANVenom m_backLeft;
   private final CANVenom m_backRight;
-  
+
   private final MecanumDrive m_drive;
 
   private final DoubleSolenoid m_butterfly;
@@ -77,16 +73,13 @@ public class Drivetrain extends SubsystemBase {
   // public void resetGyro() {
   //   m_gyro.reset();
   // }
-  
 
-  public void drive(double xSpeed, double ySpeed, double rot) { 
+  public void drive(double xSpeed, double ySpeed, double rot) {
     // rotation2d = Rotation2d.fromDegrees(m_gyro.getAngle());
     m_drive.driveCartesian(-xSpeed, -ySpeed, -rot);
 
     // m_drive.driveCartesian(forward, strafe, rotation, m_gyro.getRotation2d());
   }
-
-
 
   @Override
   public void periodic() {

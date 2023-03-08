@@ -5,14 +5,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,6 +18,7 @@ public class Swivel extends SubsystemBase {
 
   // All Cone/Cube reference angles (For placement)
   private double collectSwivelAngle = 0;
+
   private double lowSwivelAngle = 0;
   private double midSwivelAngle = 0;
   private double highSwivelAngle = 0;
@@ -31,11 +28,10 @@ public class Swivel extends SubsystemBase {
   private final CANCoder m_encoder;
   private final PIDController m_controller;
 
-
   public Swivel() {
     m_swivel = new TalonSRX(8);
     m_encoder = new CANCoder(11);
-    
+
     m_swivel.setNeutralMode(NeutralMode.Brake);
     m_encoder.configFactoryDefault();
     m_encoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
@@ -55,19 +51,19 @@ public class Swivel extends SubsystemBase {
     m_swivel.set(ControlMode.Position, 0);
   }
 
-  public void swivelLow(){
+  public void swivelLow() {
     m_swivel.set(ControlMode.Position, lowSwivelAngle);
   }
 
-  public void swivelMid(){
+  public void swivelMid() {
     m_swivel.set(ControlMode.Position, midSwivelAngle);
   }
 
-  public void swivelHigh(){
+  public void swivelHigh() {
     m_swivel.set(ControlMode.Position, highSwivelAngle);
   }
 
-  public void swivelCollect(){
+  public void swivelCollect() {
     m_swivel.set(ControlMode.Position, collectSwivelAngle);
   }
 

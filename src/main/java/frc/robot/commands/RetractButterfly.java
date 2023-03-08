@@ -12,6 +12,7 @@ import frc.robot.subsystems.Drivetrain;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class RetractButterfly extends InstantCommand {
   private final Drivetrain m_drive;
+
   public RetractButterfly(Drivetrain drive) {
     m_drive = drive;
     addRequirements(drive);

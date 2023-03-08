@@ -38,9 +38,7 @@ public final class Constants {
     private static final double kMaxArmDistance = 20.0;
   }
 
-  public static class ElevatorConstants {
-    
-  }
+  public static class ElevatorConstants {}
 
   // follow CAN IDs in ascending order
   public static class CAN_IDs {

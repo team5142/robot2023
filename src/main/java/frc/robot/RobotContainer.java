@@ -5,13 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PS4Controller;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ElevatorDownMan;
 import frc.robot.commands.ElevatorUpMan;
 import frc.robot.commands.PushButterfly;
@@ -36,20 +32,15 @@ public class RobotContainer {
   private static Joystick driver = new Joystick(0);
   public static Joystick operatorController = new Joystick(1);
 
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
 
     m_drive.setDefaultCommand(
-      new RunCommand(
-        () ->
-          m_drive.drive(
-            driver.getRawAxis(1),
-            driver.getRawAxis(0), 
-            driver.getRawAxis(2)),
-        m_drive));
+        new RunCommand(
+            () -> m_drive.drive(driver.getRawAxis(1), driver.getRawAxis(0), driver.getRawAxis(2)),
+            m_drive));
   }
 
   private void configureBindings() {
