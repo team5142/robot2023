@@ -8,6 +8,8 @@ import com.playingwithfusion.CANVenom;
 import com.playingwithfusion.CANVenom.BrakeCoastMode;
 import com.playingwithfusion.CANVenom.ControlMode;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Elevator extends SubsystemBase {
@@ -15,8 +17,6 @@ public class Elevator extends SubsystemBase {
 
   // Define the elevator motor and encoder
   private CANVenom m_elevator;
-
-
 
   // Constructor for the elevator subsystem
   public Elevator() {
@@ -56,8 +56,13 @@ public class Elevator extends SubsystemBase {
     m_elevator.set(-0.15);
   }
 
+  public double getEncoder() {
+    return m_elevator.getPosition();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("ElevatorEnc", getEncoder());
   }
 }

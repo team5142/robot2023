@@ -18,18 +18,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Swivel extends SubsystemBase {
-  /** Creates a new ArmSwivel. */
+  /** Creates a new Swivel. */
 
   // All Cone/Cube reference angles (For placement)
-  private double highConeSwivelAngle = 0;
-
-  private double lowConeSwivelAngle = 0;
-  private double highCubeSwivelAngle = 0;
-  private double lowCubeSwivelAngle = 0;
-  private double groundHubSwivelAngle = 0;
   private double collectSwivelAngle = 0;
-  private double substationSwivelAngle = 0;
-  private double genericSwivelAngle = 0;
+  private double lowSwivelAngle = 0;
+  private double midSwivelAngle = 0;
+  private double highSwivelAngle = 0;
 
   // The TalonSRX motor controller that controls the swivel motion.
   private final TalonSRX m_swivel;
@@ -58,6 +53,22 @@ public class Swivel extends SubsystemBase {
 
   public void stop() {
     m_swivel.set(ControlMode.Position, 0);
+  }
+
+  public void swivelLow(){
+    m_swivel.set(ControlMode.Position, lowSwivelAngle);
+  }
+
+  public void swivelMid(){
+    m_swivel.set(ControlMode.Position, midSwivelAngle);
+  }
+
+  public void swivelHigh(){
+    m_swivel.set(ControlMode.Position, highSwivelAngle);
+  }
+
+  public void swivelCollect(){
+    m_swivel.set(ControlMode.Position, collectSwivelAngle);
   }
 
   public double getEncoder() {
