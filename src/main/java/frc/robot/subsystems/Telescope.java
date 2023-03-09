@@ -25,7 +25,7 @@ public class Telescope extends SubsystemBase {
   private final double kD = 0.0;
 
   public Telescope() {
-    m_telescope = new TalonSRX(8);
+    m_telescope = new TalonSRX(10);
     TalonSRXConfiguration configuration = new TalonSRXConfiguration();
 
     m_telescope.setNeutralMode(NeutralMode.Brake);
@@ -39,7 +39,7 @@ public class Telescope extends SubsystemBase {
   }
 
   public void TelescopeIn() {
-    m_telescope.set(ControlMode.PercentOutput, -0.2);
+    m_telescope.set(ControlMode.PercentOutput, -0.5);
   }
 
   public void stop() {

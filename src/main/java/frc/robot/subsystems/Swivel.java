@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
@@ -20,7 +21,7 @@ public class Swivel extends SubsystemBase {
   private double collectSwivelAngle = 0;
 
   private double lowSwivelAngle = 0;
-  private double midSwivelAngle = 0;
+  public double midSwivelAngle = 130;
   private double highSwivelAngle = 0;
 
   // The TalonSRX motor controller that controls the swivel motion.
@@ -36,11 +37,11 @@ public class Swivel extends SubsystemBase {
     m_encoder.configFactoryDefault();
     m_encoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
 
-    m_controller = new PIDController(0.5, 0, 0);
+    m_controller = new PIDController(0.2, 0, 0.04);
   }
 
   public void swivelUp() {
-    m_swivel.set(ControlMode.PercentOutput, 0.35);
+    m_swivel.set(ControlMode.PercentOutput, 0.35, DemandType.ArbitraryFeedForward, 0.15);
   }
 
   public void swivelDown() {
@@ -48,7 +49,7 @@ public class Swivel extends SubsystemBase {
   }
 
   public void stop() {
-    m_swivel.set(ControlMode.Position, 0);
+    m_swivel.set(ControlMode.PercentOutput, 0);
   }
 
   public void swivelLow() {
@@ -56,7 +57,7 @@ public class Swivel extends SubsystemBase {
   }
 
   public void swivelMid() {
-    m_swivel.set(ControlMode.Position, midSwivelAngle);
+    m_swivel.set(ControlMode.PercentOutput, -m_controller.calculate(m_encoder.getAbsolutePosition(), midSwivelAngle));
   }
 
   public void swivelHigh() {
