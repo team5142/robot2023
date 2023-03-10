@@ -49,7 +49,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public void manualUp() {
-    m_elevator.set(0.25);
+    m_elevator.set(0.40);
   }
 
   public void manualDown() {
