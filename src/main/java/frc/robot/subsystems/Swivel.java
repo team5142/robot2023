@@ -5,51 +5,47 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Swivel extends SubsystemBase {
-  /** Creates a new ArmSwivel. */
+  /** Creates a new Swivel. */
 
   // All Cone/Cube reference angles (For placement)
-  private double highConeSwivelAngle = 0;
-
-  private double lowConeSwivelAngle = 0;
-  private double highCubeSwivelAngle = 0;
-  private double lowCubeSwivelAngle = 0;
-  private double groundHubSwivelAngle = 0;
   private double collectSwivelAngle = 0;
-  private double substationSwivelAngle = 0;
-  private double genericSwivelAngle = 0;
+
+  private double lowSwivelAngle = 0;
+  public double midSwivelAngle = 130;
+  private double highSwivelAngle = 0;
 
   // The TalonSRX motor controller that controls the swivel motion.
   private final TalonSRX m_swivel;
   private final CANCoder m_encoder;
   private final PIDController m_controller;
 
-
   public Swivel() {
     m_swivel = new TalonSRX(8);
     m_encoder = new CANCoder(11);
-    
+
     m_swivel.setNeutralMode(NeutralMode.Brake);
     m_encoder.configFactoryDefault();
     m_encoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
 
-    m_controller = new PIDController(0.5, 0, 0);
+    m_controller = new PIDController(0.2, 0, 0.04);
   }
 
   public void swivelUp() {
+<<<<<<< HEAD
     m_swivel.set(ControlMode.PercentOutput, 0.55);
+=======
+    m_swivel.set(ControlMode.PercentOutput, 0.35, DemandType.ArbitraryFeedForward, 0.15);
+>>>>>>> c926f18123ca806b9e9692c9f73f73c981c6a73c
   }
 
   public void swivelDown() {
@@ -57,7 +53,23 @@ public class Swivel extends SubsystemBase {
   }
 
   public void stop() {
-    m_swivel.set(ControlMode.Position, 0);
+    m_swivel.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void swivelLow() {
+    m_swivel.set(ControlMode.Position, lowSwivelAngle);
+  }
+
+  public void swivelMid() {
+    m_swivel.set(ControlMode.PercentOutput, -m_controller.calculate(m_encoder.getAbsolutePosition(), midSwivelAngle));
+  }
+
+  public void swivelHigh() {
+    m_swivel.set(ControlMode.Position, highSwivelAngle);
+  }
+
+  public void swivelCollect() {
+    m_swivel.set(ControlMode.Position, collectSwivelAngle);
   }
 
   public double getEncoder() {

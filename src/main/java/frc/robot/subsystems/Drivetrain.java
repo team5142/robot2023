@@ -6,30 +6,28 @@ package frc.robot.subsystems;
 
 import com.playingwithfusion.CANVenom;
 import com.playingwithfusion.CANVenom.BrakeCoastMode;
-import com.kauailabs.navx.frc.AHRS;
-
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.math.geometry.Rotation2d;
-
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
   private final CANVenom m_frontLeft;
+
   private final CANVenom m_frontRight;
   private final CANVenom m_backLeft;
   private final CANVenom m_backRight;
-  
+
   private final MecanumDrive m_drive;
 
   private final DoubleSolenoid m_butterfly;
 
   private Rotation2d rotation2d;
+
+  private Boolean m_isButterfly;
 
   // AHRS provides access to the NAVX sensors (gyrometers, inertial navigation, etc)
   // private AHRS m_gyro = new AHRS(SPI.Port.kMXP);
@@ -45,6 +43,9 @@ public class Drivetrain extends SubsystemBase {
     setBrake();
     m_drive = new MecanumDrive(m_frontLeft, m_backLeft, m_frontRight, m_backRight);
     m_butterfly = new DoubleSolenoid(6, PneumaticsModuleType.CTREPCM, 0, 3);
+    retractButterfly();
+    m_isButterfly = false;
+
   }
 
   public void setBrake() {
@@ -54,12 +55,22 @@ public class Drivetrain extends SubsystemBase {
     m_backRight.setBrakeCoastMode(BrakeCoastMode.Brake);
   }
 
-  public void pushButterfly() {
+  private void pushButterfly() {
+    m_butterfly.set(Value.kReverse);
+    m_isButterfly = true;
+  }
+  
+  private void retractButterfly() {
     m_butterfly.set(Value.kForward);
+    m_isButterfly = false;
   }
 
-  public void retractButterfly() {
-    m_butterfly.set(Value.kReverse);
+  public void toggleButterfly() {
+    if (m_isButterfly == true) {
+      retractButterfly();
+    } else {
+      pushButterfly();
+    }
   }
 
   // public double getGyroAngle() {
@@ -77,16 +88,13 @@ public class Drivetrain extends SubsystemBase {
   // public void resetGyro() {
   //   m_gyro.reset();
   // }
-  
 
-  public void drive(double xSpeed, double ySpeed, double rot) { 
+  public void drive(double xSpeed, double ySpeed, double rot) {
     // rotation2d = Rotation2d.fromDegrees(m_gyro.getAngle());
-    m_drive.driveCartesian(-xSpeed, -ySpeed, -rot);
+    m_drive.driveCartesian(-xSpeed, ySpeed, rot);
 
     // m_drive.driveCartesian(forward, strafe, rotation, m_gyro.getRotation2d());
   }
-
-
 
   @Override
   public void periodic() {

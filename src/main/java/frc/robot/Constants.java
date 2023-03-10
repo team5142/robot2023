@@ -29,23 +29,16 @@ public final class Constants {
   }
 
   public static class ArmConstants {
-    private static final int highConeSwivelAngle = 0;
-    private static final int lowConeSwivelAngle = 0;
-    private static final int highCubeSwivelAngle = 0;
-    private static final int lowCubeSwivelAngle = 0;
-    private static final int groundHubSwivelAngle = 0;
+    private static final int highSwivelAngle = 0;
+    private static final int midSwivelAngle = 0;
+    private static final int lowSwivelAngle = 0;
     private static final int collectSwivelAngle = 0;
-    private static final int substationSwivelAngle = 0;
     private static final int genericSwivelAngle = 0;
     private static final double kMinArmDistance = 0.0;
     private static final double kMaxArmDistance = 20.0;
   }
 
-  public static class ElevatorConstants {
-    private static final int kElevatorEncoderCountsPerInch = 4096;
-    private static final int kElevatorMaxEncoderCounts = 10000;
-    private static final int kElevatorMinEncoderCounts = 0;
-  }
+  public static class ElevatorConstants {}
 
   // follow CAN IDs in ascending order
   public static class CAN_IDs {

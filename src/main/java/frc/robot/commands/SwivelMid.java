@@ -5,16 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Swivel;
 
-public class ElevatorDownMan extends CommandBase {
-  /** Creates a new ElevatorUpMan. */
-  private final Elevator m_elev;
-
-  public ElevatorDownMan(Elevator elev) {
+public class SwivelMid extends CommandBase {
+  /** Creates a new SwivelMid. */
+  private final Swivel m_swiv;
+  public SwivelMid(Swivel swiv) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_elev = elev;
-    addRequirements(elev);
+    m_swiv = swiv;
+    addRequirements(swiv);
   }
 
   // Called when the command is initially scheduled.
@@ -24,18 +23,19 @@ public class ElevatorDownMan extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_elev.manualDown();
+    m_swiv.swivelMid();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_elev.stop();
+    m_swiv.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+
     return false;
   }
 }

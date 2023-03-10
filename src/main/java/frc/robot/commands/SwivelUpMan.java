@@ -10,6 +10,7 @@ import frc.robot.subsystems.Swivel;
 public class SwivelUpMan extends CommandBase {
   /** Creates a new SwivelUpMan. */
   private final Swivel m_swivel;
+
   public SwivelUpMan(Swivel swiv) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_swivel = swiv;

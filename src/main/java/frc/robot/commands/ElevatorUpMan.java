@@ -10,6 +10,7 @@ import frc.robot.subsystems.Elevator;
 public class ElevatorUpMan extends CommandBase {
   /** Creates a new ElevatorUpMan. */
   private final Elevator m_elev;
+
   public ElevatorUpMan(Elevator elev) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_elev = elev;
