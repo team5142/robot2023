@@ -17,6 +17,8 @@ import frc.robot.commands.SwivelUpMan;
 import frc.robot.commands.TelescopeInMan;
 import frc.robot.commands.TelescopeOutMan;
 import frc.robot.commands.ToggleButterfly;
+import frc.robot.commands.ToggleClaw;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Swivel;
@@ -33,6 +35,7 @@ public class RobotContainer {
   private final Elevator m_elevator = new Elevator();
   private final Swivel m_swivel = new Swivel();
   private final Telescope m_tele = new Telescope();
+  private final Claw m_claw = new Claw();
 
   private static Joystick driver = new Joystick(0);
   private static Joystick secDriver = new Joystick(1);
@@ -58,6 +61,7 @@ public class RobotContainer {
     final POVButton dpadRight = new POVButton(operator, 90);
     final POVButton dpadLeft = new POVButton(operator, 270);
     final JoystickButton aButton = new JoystickButton(operator, 2);
+    final JoystickButton bButton = new JoystickButton(operator, 3);
 
     driverRightThumb.onTrue(new ToggleButterfly(m_drive));
     rightTrig.whileTrue(new ElevatorUpMan(m_elevator));
@@ -67,6 +71,8 @@ public class RobotContainer {
     dpadRight.whileTrue(new TelescopeOutMan(m_tele));
     dpadLeft.whileTrue(new TelescopeInMan(m_tele));
     aButton.whileTrue(new SwivelMid(m_swivel));
+    bButton.onTrue(new ToggleClaw(m_claw));
+    
   }
 
   public Command getAutonomousCommand() {

@@ -41,6 +41,7 @@ public class Swivel extends SubsystemBase {
   }
 
   public void swivelUp() {
+    
 
     m_swivel.set(ControlMode.PercentOutput, 0.35, DemandType.ArbitraryFeedForward, 0.15);
   }

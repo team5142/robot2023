@@ -42,7 +42,7 @@ public class Drivetrain extends SubsystemBase {
     m_backRight.setInverted(true);
     setBrake();
     m_drive = new MecanumDrive(m_frontLeft, m_backLeft, m_frontRight, m_backRight);
-    m_butterfly = new DoubleSolenoid(6, PneumaticsModuleType.CTREPCM, 0, 3);
+    m_butterfly = new DoubleSolenoid(6, PneumaticsModuleType.CTREPCM, 1, 2);
     retractButterfly();
     m_isButterfly = false;
 

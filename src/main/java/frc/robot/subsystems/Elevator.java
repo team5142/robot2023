@@ -20,17 +20,19 @@ public class Elevator extends SubsystemBase {
     m_elevator = new CANVenom(4);
     m_elevator.setBrakeCoastMode(BrakeCoastMode.Brake);
     m_elevator.setKP(0.35);
-    m_elevator.setControlMode(ControlMode.Proportional);
+    m_elevator.setControlMode(ControlMode.PositionControl);
     m_elevator.resetPosition();
+    // toBottom();
   }
-
+  
   // Method to stop the elevator
   public void stop() {
     m_elevator.set(0);
   }
-
+  
   public void toBottom() {
-    m_elevator.setPosition(0);
+    m_elevator.setCommand(ControlMode.PositionControl, 5);
+    // m_elevator.setPossition(5);
   }
 
   public void toLower() {
