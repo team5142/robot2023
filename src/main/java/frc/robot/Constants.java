@@ -39,7 +39,7 @@ public final class Constants {
 
     public static final double armHoldingPowerDown = 0;
     public static final double armHoldingPowerMid = 0;
-    public static final double armHoldingPowerUp = 0;
+    public static final double armHoldingPowerUp = 0.03;
   }
 
   public static class ElevatorConstants {}

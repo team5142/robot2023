@@ -50,7 +50,7 @@ public class Swivel extends SubsystemBase {
   }
 
   public void swivelUpPower(double power) {
-    armMotorController.set(TalonSRXControlMode.PercentOutput, power);
+    m_swivel.set(TalonSRXControlMode.PercentOutput, power);
   }
 
   public void swivelDown() {
