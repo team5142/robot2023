@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.Swivel;
 
 public class SwivelUpMan extends CommandBase {
@@ -19,12 +21,27 @@ public class SwivelUpMan extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    double power = -RobotContainer.operator.getY();
+    System.out.println(power);
+    m_swivel.swivelUpPower(power);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_swivel.swivelUp();
+    double power = -RobotContainer.operator.getY();
+
+    if (power<ArmConstants.armHoldingPowerUp) {
+
+      power = 0;
+      /* 
+      if (m_swivel.getEncoder()<=0) {
+        power = 0;
+      }
+      */
+    }
+    m_swivel.swivelUpPower(power+ ArmConstants.armHoldingPowerUp);
   }
 
   // Called once the command ends or is interrupted.
