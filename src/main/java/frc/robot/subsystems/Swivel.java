@@ -35,19 +35,17 @@ public class Swivel extends SubsystemBase {
 
     m_swivel.setNeutralMode(NeutralMode.Brake);
     m_encoder.configFactoryDefault();
-    m_encoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+   // m_encoder.relative
 
     m_controller = new PIDController(0.2, 0, 0.04);
   }
 
   public void swivelUp() {
-    
-
-    m_swivel.set(ControlMode.PercentOutput, 0.35, DemandType.ArbitraryFeedForward, 0.15);
+    m_swivel.set(ControlMode.PercentOutput, 0.2, DemandType.ArbitraryFeedForward, 0.2);
   }
 
   public void swivelDown() {
-    m_swivel.set(ControlMode.PercentOutput, -0.2);
+    m_swivel.set(ControlMode.PercentOutput, -0.4);
   }
 
   public void stop() {
@@ -56,6 +54,10 @@ public class Swivel extends SubsystemBase {
 
   public void swivelLow() {
     m_swivel.set(ControlMode.Position, lowSwivelAngle);
+  }
+
+  public void swivelToLow() {
+    m_swivel.set(ControlMode.MotionMagic, 3);
   }
 
   public void swivelMid() {

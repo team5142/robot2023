@@ -6,9 +6,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commands.AutoDriveForward;
 import frc.robot.commands.ElevatorDownMan;
 import frc.robot.commands.ElevatorUpMan;
 import frc.robot.commands.SwivelDownMan;
@@ -36,6 +38,8 @@ public class RobotContainer {
   private final Swivel m_swivel = new Swivel();
   private final Telescope m_tele = new Telescope();
   private final Claw m_claw = new Claw();
+
+  private final ParallelCommandGroup m_liftExtend = new ParallelCommandGroup(new SwivelUpMan(m_swivel), new TelescopeOutMan(m_tele));
 
   private static Joystick driver = new Joystick(0);
   private static Joystick secDriver = new Joystick(1);
@@ -67,6 +71,7 @@ public class RobotContainer {
     rightTrig.whileTrue(new ElevatorUpMan(m_elevator));
     rightBut.whileTrue(new ElevatorDownMan(m_elevator));
     dpadUp.whileTrue(new SwivelUpMan(m_swivel));
+    // dpadUp.whileTrue(m_liftExtend);
     dpadDown.whileTrue(new SwivelDownMan(m_swivel));
     dpadRight.whileTrue(new TelescopeOutMan(m_tele));
     dpadLeft.whileTrue(new TelescopeInMan(m_tele));
@@ -77,6 +82,6 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
+    return new AutoDriveForward(m_drive);
   }
 }

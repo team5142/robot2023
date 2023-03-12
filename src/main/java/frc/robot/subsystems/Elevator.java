@@ -16,7 +16,7 @@ public class Elevator extends SubsystemBase {
 
   // Define the elevator motor and encoder
   private CANVenom m_elevator;
-  DigitalInput ZeroLimitSwitch = new DigitalInput(0);
+  private DigitalInput m_limit;
 
   // Constructor for the elevator subsystem
   public Elevator() {
@@ -24,7 +24,8 @@ public class Elevator extends SubsystemBase {
     m_elevator.setBrakeCoastMode(BrakeCoastMode.Brake);
     m_elevator.setKP(0.35);
     m_elevator.setControlMode(ControlMode.PositionControl);
-    m_elevator.resetPosition();
+    m_limit = new DigitalInput(1);
+    // m_elevator.resetPosition();
     // toBottom();
   }
   
@@ -33,12 +34,6 @@ public class Elevator extends SubsystemBase {
     m_elevator.set(0);
   }
   
-  public void zero() {
-    m_elevator.setCommand(ControlMode.PositionControl, 0);
-    if (ZeroLimitSwitch.get()) {
-      m_elevator.setPosition(0);
-    }
-  }
 
   public void toBottom() {
     m_elevator.setCommand(ControlMode.PositionControl, 0);
@@ -71,7 +66,12 @@ public class Elevator extends SubsystemBase {
 
   @Override
   public void periodic() {
+    // if (m_limit.get() == true) {
+    //   m_elevator.setPosition(0);
+    //   m_elevator.set(0);
+    // }
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("ElevatorEnc", getEncoder());
+    SmartDashboard.putBoolean("ElevatorLimt", m_limit.get());
   }
 }

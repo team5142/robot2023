@@ -60,6 +60,14 @@ public class Drivetrain extends SubsystemBase {
     m_isButterfly = true;
   }
   
+
+  public void resetEncoders() {
+    m_frontLeft.resetPosition();
+    m_frontRight.resetPosition();
+    m_backLeft.resetPosition();
+    m_backRight.resetPosition();
+  }
+
   private void retractButterfly() {
     m_butterfly.set(Value.kForward);
     m_isButterfly = false;
