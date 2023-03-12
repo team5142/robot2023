@@ -31,6 +31,7 @@ public class SwivelUpMan extends CommandBase {
   @Override
   public void execute() {
     double power = -RobotContainer.operator.getY();
+    System.out.println(power);
 
     if (power<ArmConstants.armHoldingPowerUp) {
 
@@ -41,7 +42,7 @@ public class SwivelUpMan extends CommandBase {
       }
       */
     }
-    m_swivel.swivelUpPower(power+ ArmConstants.armHoldingPowerUp);
+    m_swivel.swivelUpPower(power);
   }
 
   // Called once the command ends or is interrupted.
