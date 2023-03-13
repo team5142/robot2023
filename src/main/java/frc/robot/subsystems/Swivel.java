@@ -7,7 +7,9 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import edu.wpi.first.math.controller.PIDController;
@@ -15,6 +17,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Swivel extends SubsystemBase {
+
+  private WPI_TalonSRX armMotorController;
+
   /** Creates a new Swivel. */
 
   // All Cone/Cube reference angles (For placement)
@@ -42,6 +47,10 @@ public class Swivel extends SubsystemBase {
 
   public void swivelUp() {
     m_swivel.set(ControlMode.PercentOutput, 0.2, DemandType.ArbitraryFeedForward, 0.2);
+  }
+
+  public void swivelUpPower(double power) {
+    m_swivel.set(TalonSRXControlMode.PercentOutput, power);
   }
 
   public void swivelDown() {
