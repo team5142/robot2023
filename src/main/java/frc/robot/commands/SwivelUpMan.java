@@ -36,11 +36,7 @@ public class SwivelUpMan extends CommandBase {
     if (power<ArmConstants.armHoldingPowerUp) {
 
       power = 0;
-      /* 
-      if (m_swivel.getEncoder()<=0) {
-        power = 0;
-      }
-      */
+
     }
     m_swivel.swivelUpPower(power);
   }
