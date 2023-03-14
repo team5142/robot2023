@@ -5,8 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -21,8 +19,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  private AddressableLED m_led;
-  private AddressableLEDBuffer m_buffer;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -34,15 +30,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     CameraServer.startAutomaticCapture(0);
-    m_led = new AddressableLED(0);
-    m_buffer = new AddressableLEDBuffer(39);
-    m_led.setLength(m_buffer.getLength());
 
-    
-    for (int i = 0; i < m_buffer.getLength(); i++) {
-      m_buffer.setRGB(i, 255, 0, 255);
-    }
-    m_led.setData(m_buffer);
   }
   
   /**
@@ -59,7 +47,6 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    m_led.start();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
