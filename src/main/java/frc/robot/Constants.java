@@ -63,9 +63,10 @@ public final class Constants {
 
     // arm IDs
     public static final int SwivelID = 7;
+    public static final int CANcoderID = 11;
     public static final int TelescopeID = 8;
 
-    // Harvester ID
-    public static final int harvesterID = 9;
+    // claw ID
+    public static final int clawID = 9;
   }
 }

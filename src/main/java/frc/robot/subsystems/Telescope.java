@@ -35,7 +35,7 @@ public class Telescope extends SubsystemBase {
   }
 
   public void TelescopeOut() {
-    m_telescope.set(ControlMode.PercentOutput, 0.35);
+    m_telescope.set(ControlMode.PercentOutput, 0.5);
   }
 
   public void TelescopeIn() {
