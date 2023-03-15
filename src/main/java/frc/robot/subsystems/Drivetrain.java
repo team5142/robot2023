@@ -32,6 +32,10 @@ public class Drivetrain extends SubsystemBase {
 
   private Boolean m_isButterfly;
 
+  private Boolean m_isFieldOriented;
+
+  private double m_referenceAngle;
+
   public Drivetrain() {
     m_frontLeft = new CANVenom(0);
     m_frontRight = new CANVenom(1);
@@ -46,6 +50,8 @@ public class Drivetrain extends SubsystemBase {
     retractButterfly();
     m_navX = new AHRS(SPI.Port.kMXP);
     m_isButterfly = false;
+    m_isFieldOriented = true;
+    m_referenceAngle = m_navX.getAngle();
   }
 
   public void setBrake() {
@@ -55,17 +61,16 @@ public class Drivetrain extends SubsystemBase {
     m_backRight.setBrakeCoastMode(BrakeCoastMode.Brake);
   }
 
-  private void pushButterfly() {
-    m_butterfly.set(Value.kReverse);
-    m_isButterfly = true;
-  }
-  
-
   public void resetEncoders() {
     m_frontLeft.resetPosition();
     m_frontRight.resetPosition();
     m_backLeft.resetPosition();
     m_backRight.resetPosition();
+  }
+
+  private void pushButterfly() {
+    m_butterfly.set(Value.kReverse);
+    m_isButterfly = true;
   }
 
   private void retractButterfly() {
@@ -74,7 +79,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void toggleButterfly() {
-    if (m_isButterfly == true) {
+    if (m_isButterfly) {
       retractButterfly();
     } else {
       pushButterfly();
@@ -114,11 +119,23 @@ public class Drivetrain extends SubsystemBase {
     m_drive.driveCartesian(0.0, 0.0, 0.0);
   }
   
-
-  public void drive(double xSpeed, double ySpeed, double rot) {
-    Rotation2d rotation2d = Rotation2d.fromDegrees(m_navX.getAngle());
-    m_drive.driveCartesian(-xSpeed, ySpeed, rot, rotation2d);
+  public void toggleFieldOrientation() {
+    m_isFieldOriented = !m_isFieldOriented;
+    if (m_isFieldOriented) {
+      // restore reference angle when switching to field oriented mode
+      m_referenceAngle = m_navX.getAngle();
+    }
   }
+
+public void drive(double xSpeed, double ySpeed, double rot) {
+  Rotation2d rotation2d;
+  if (m_isFieldOriented) {
+      rotation2d = Rotation2d.fromDegrees(m_referenceAngle);
+  } else {
+      rotation2d = Rotation2d.fromDegrees(m_navX.getAngle());
+  }
+  m_drive.driveCartesian(-xSpeed, ySpeed, rot, rotation2d);
+}
 
   @Override
   public void periodic() {
