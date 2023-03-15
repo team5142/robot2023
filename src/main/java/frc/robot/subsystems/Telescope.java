@@ -13,7 +13,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Telescope extends SubsystemBase {
-  // Creates a new Telescope
+  /** Creates a new Telescope. */
 
   // Declare class variables
   private final TalonSRX m_telescope; // TalonSRX motor controller for the telescope arm
@@ -25,25 +25,25 @@ public class Telescope extends SubsystemBase {
   private final double kD = 0.0;
 
   public Telescope() {
-    m_telescope = new TalonSRX(10);
-    TalonSRXConfiguration configuration = new TalonSRXConfiguration();
+    m_telescope = new TalonSRX(10); // Telescoping motor CAN ID
+    TalonSRXConfiguration configuration = new TalonSRXConfiguration(); // Man idk what this does
 
-    m_telescope.setNeutralMode(NeutralMode.Brake);
-    m_telescope.configAllSettings(configuration);
+    m_telescope.setNeutralMode(NeutralMode.Brake); // Initialize the motor as braked
+    m_telescope.configAllSettings(configuration); // Man idk what this does
 
-    m_controller = new PIDController(0.1, 0, 0);
+    m_controller = new PIDController(0.1, 0, 0); // PID Control (Will change later)
   }
 
   public void TelescopeOut() {
-    m_telescope.set(ControlMode.PercentOutput, 0.5);
+    m_telescope.set(ControlMode.PercentOutput, 0.5); // Sets motor output to +50%
   }
 
   public void TelescopeIn() {
-    m_telescope.set(ControlMode.PercentOutput, -0.5);
+    m_telescope.set(ControlMode.PercentOutput, -0.5); // Sets motor output to -50%
   }
 
   public void stop() {
-    m_telescope.set(ControlMode.Position, 0);
+    m_telescope.set(ControlMode.Position, 0); // Sets motor output to 0
   }
 
   @Override
