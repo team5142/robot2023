@@ -122,7 +122,7 @@ public class Drivetrain extends SubsystemBase {
   public void toggleFieldOrientation() {
     m_isFieldOriented = !m_isFieldOriented;
     if (m_isFieldOriented) {
-      // restore reference angle when switching to field oriented mode
+      // restore reference angle when switching to field oriented mode (May need to fix)
       m_referenceAngle = m_navX.getAngle();
     }
   }

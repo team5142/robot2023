@@ -4,21 +4,17 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.sensors.AbsoluteSensorRange;
-import com.ctre.phoenix.sensors.CANCoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Swivel extends SubsystemBase {
-
-  private WPI_TalonSRX armMotorController;
 
   /** Creates a new Swivel. */
 
@@ -26,68 +22,87 @@ public class Swivel extends SubsystemBase {
   private double groundCollectSwivelAngle = 0; // Swivel angle for ground collection 
   private double substationCollectSwivelAngle = 0; // Swivel angle for double substation collection
   private double lowSwivelAngle = 0; // Swivel Angle for low hub (Cone/Cube)
-  public double midSwivelAngle = 130; // Swivel Angle for mid hub (Cone/Cube)
+  private double midSwivelAngle = 0; // Swivel Angle for mid hub (Cone/Cube)
   private double highSwivelAngle = 0; // Swivel Angle for high hub (Cone/Cube)
 
   // The TalonSRX motor controller that controls the swivel motion.
-  private final TalonSRX m_swivel;
-  private final CANCoder m_encoder;
+  private final CANSparkMax m_swivel;
+  private final RelativeEncoder m_encoder;
   private final PIDController m_controller;
 
-  public Swivel() {
-    m_swivel = new TalonSRX(8); // Swivel Motor CAN ID
-    m_encoder = new CANCoder(11); // CANCoder CAN ID
+  // Target position for the motor
+  public double m_targetPosition;
 
-    m_swivel.setNeutralMode(NeutralMode.Brake); // Initialize the motor as braked
-    m_encoder.configFactoryDefault(); // Man Idk what this does
+  public Swivel() {
+    m_swivel = new CANSparkMax(8, MotorType.kBrushless); // Swivel Motor CAN ID
+    m_encoder = m_swivel.getEncoder();
+
+    m_swivel.setIdleMode(IdleMode.kBrake); // Initialize the motor as braked
 
     m_controller = new PIDController(0.2, 0, 0.04); // PID Control (Requires more testing)
+
+    m_targetPosition = m_encoder.getPosition();
   }
 
   public void swivelUp() {
-    m_swivel.set(ControlMode.PercentOutput, 0.2, DemandType.ArbitraryFeedForward, 0.2); // Sets motor speed to +20%
+    m_swivel.set(0.2); // Sets motor speed to +20%
   }
 
   public void swivelUpPower(double power) {
-    m_swivel.set(TalonSRXControlMode.PercentOutput, power); // Sets a constant holding power (To resist gravity)
+    m_swivel.set(power); // Sets a constant holding power (To resist gravity)
   }
 
   public void swivelDown() {
-    m_swivel.set(ControlMode.PercentOutput, -0.2); // Sets motor speed to -40%
+    m_swivel.set(-0.2); // Sets motor speed to -40%
   }
 
   public void stop() {
-    m_swivel.set(ControlMode.PercentOutput, 0); // Sets motor speed to 0
+    m_swivel.set(0); // Sets motor speed to 0
   }
 
   public void swivelLow() {
-    m_swivel.set(ControlMode.Position, lowSwivelAngle); // Swivels the arm to the set low hub angle
+    m_targetPosition = lowSwivelAngle; // Set the target position to the low hub angle
   }
 
   public void swivelMid() {
-    m_swivel.set(ControlMode.PercentOutput, -m_controller.calculate(m_encoder.getAbsolutePosition(), midSwivelAngle)); // Swivels the arm to the set mid hub angle (Based on PID control)
+    m_targetPosition = midSwivelAngle; // Set the target position to the mid hub angle
   }
 
   public void swivelHigh() {
-    m_swivel.set(ControlMode.Position, highSwivelAngle); // Swivels the arm to the set high hub angle
+    m_targetPosition = highSwivelAngle; // Set the target position to the high hub angle
   }
 
   public void swivelGroundCollect() {
-    m_swivel.set(ControlMode.Position, groundCollectSwivelAngle); // Swivels the arm to the set ground angle
+    m_targetPosition = groundCollectSwivelAngle; // Set the target position to the ground angle
   }
 
   public void swivelSubstationCollect() {
-    m_swivel.set(ControlMode.Position, substationCollectSwivelAngle); // Swivels the arm to the set double substation angle
+    m_targetPosition = substationCollectSwivelAngle; // Set the target position to the double substation angle
   }
 
   public double getEncoder() {
-    return m_encoder.getAbsolutePosition(); // Returns the absolute position of the CANcoder
+    return m_encoder.getPosition(); // Returns the absolute position of the CANcoder
   }
 
   public void initialize() {
-    m_swivel.set(ControlMode.Position, m_controller.calculate(m_encoder.getPosition(), 350)); // Initializes the encoder at a set position (Needs some tweaking)
+    m_encoder.setPosition(m_controller.calculate(m_encoder.getPosition(), 0)); // Initializes the encoder at a set position (Needs some tweaking)
   }
 
+  public void setPosition(double position) {
+
+    // Set the target position to the given position
+    m_targetPosition = position;
+
+    // Set the setpoint of the PID controller to the target position
+    m_controller.setSetpoint(m_targetPosition); 
+
+    // Reset the velocity of the motor controller to 0
+    m_swivel.getPIDController().setReference(0, ControlType.kVelocity);
+
+    // Set the reference velocity of the motor controller to the output of the PID controller
+    m_swivel.getPIDController().setReference(m_controller.calculate(m_encoder.getPosition(), m_targetPosition), ControlType.kVelocity);
+  }
+  
   @Override
   public void periodic() {
     SmartDashboard.putNumber("SwivelEnc", getEncoder()); // For testing
