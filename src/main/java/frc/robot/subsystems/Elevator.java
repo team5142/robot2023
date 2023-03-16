@@ -60,6 +60,11 @@ public class Elevator extends SubsystemBase {
     m_elevator.set(-0.15);
   }
 
+  public void elevatorUpPower(double ePower) {
+    m_elevator.set(ePower); // Sets a constant holding power (To resist gravity)
+  }
+
+
   public double getEncoder() {
     return m_elevator.getPosition();
   }

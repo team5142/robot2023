@@ -42,7 +42,13 @@ public final class Constants {
     public static final double armHoldingPowerUp = 0.03;
   }
 
-  public static class ElevatorConstants {}
+  public static class ElevatorConstants {
+
+    public static final double elevHoldingPowerDown = 0;
+    public static final double elevHoldingPowerMid = 0;
+    public static final double elevHoldingPowerUp = 0.03;
+    
+  }
 
   // follow CAN IDs in ascending order
   public static class CAN_IDs {

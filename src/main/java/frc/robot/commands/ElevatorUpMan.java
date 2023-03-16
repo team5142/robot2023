@@ -6,6 +6,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Elevator;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.RobotContainer;
 
 public class ElevatorUpMan extends CommandBase {
   /** Creates a new ElevatorUpMan. */
@@ -19,12 +21,24 @@ public class ElevatorUpMan extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    double ePower = -RobotContainer.operator.getY();
+    System.out.println(ePower);
+    m_elev.elevatorUpPower(ePower);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_elev.manualUp();
+    double ePower = -RobotContainer.operator.getX();
+    System.out.println(ePower);
+
+    if (ePower<ElevatorConstants.elevHoldingPowerUp) {
+
+      ePower = 0;
+
+    }
+    m_elev.elevatorUpPower(ePower);
   }
 
   // Called once the command ends or is interrupted.
