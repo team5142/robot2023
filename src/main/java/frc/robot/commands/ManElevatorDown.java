@@ -5,46 +5,32 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.subsystems.Swivel;
+import frc.robot.subsystems.Elevator;
 
-public class SwivelUpMan extends CommandBase {
-  /** Creates a new SwivelUpMan. */
-  private final Swivel m_swivel;
+public class ManElevatorDown extends CommandBase {
+  /** Creates a new ElevatorUpMan. */
+  private final Elevator m_elev;
 
-  public SwivelUpMan(Swivel swiv) {
+  public ManElevatorDown(Elevator elev) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_swivel = swiv;
-    addRequirements(swiv);
+    m_elev = elev;
+    addRequirements(elev);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    double power = -RobotContainer.operator.getY();
-    System.out.println(power);
-    m_swivel.swivelUpPower(power);
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double power = -RobotContainer.operator.getY();
-    System.out.println(power);
-
-    if (power<ArmConstants.armHoldingPowerUp) {
-
-      power = 0;
-
-    }
-    m_swivel.swivelUpPower(power);
+    m_elev.manualDown();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_swivel.stop();
+    m_elev.stop();
   }
 
   // Returns true when the command should end.

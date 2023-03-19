@@ -7,11 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Telescope;
 
-public class TelescopeInMan extends CommandBase {
+public class ManTelescopeIn extends CommandBase {
   /** Creates a new TelescopeInMan. */
   private final Telescope m_telescope;
 
-  public TelescopeInMan(Telescope tele) {
+  public ManTelescopeIn(Telescope tele) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_telescope = tele;
     addRequirements(tele);

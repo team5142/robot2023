@@ -5,16 +5,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Elevator;
 
-public class ElevatorDownMan extends CommandBase {
-  /** Creates a new ElevatorUpMan. */
-  private final Elevator m_elev;
-
-  public ElevatorDownMan(Elevator elev) {
+public class Balance extends CommandBase {
+  /** Creates a new Balance. */
+  public Balance() {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_elev = elev;
-    addRequirements(elev);
   }
 
   // Called when the command is initially scheduled.
@@ -23,15 +18,11 @@ public class ElevatorDownMan extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_elev.manualDown();
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_elev.stop();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

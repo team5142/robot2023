@@ -5,46 +5,32 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Elevator;
-import frc.robot.Constants.ElevatorConstants;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.Telescope;
 
-public class ElevatorUpMan extends CommandBase {
-  /** Creates a new ElevatorUpMan. */
-  private final Elevator m_elev;
+public class ManTelescopeOut extends CommandBase {
+  /** Creates a new TelescopeOutMan. */
+  private final Telescope m_telescope;
 
-  public ElevatorUpMan(Elevator elev) {
+  public ManTelescopeOut(Telescope tele) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_elev = elev;
-    addRequirements(elev);
+    m_telescope = tele;
+    addRequirements(tele);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    double ePower = -RobotContainer.operator.getY();
-    System.out.println(ePower);
-    m_elev.elevatorUpPower(ePower);
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double ePower = -RobotContainer.operator.getX();
-    System.out.println(ePower);
-
-    if (ePower<ElevatorConstants.elevHoldingPowerUp) {
-
-      ePower = 0;
-
-    }
-    m_elev.elevatorUpPower(ePower);
+    m_telescope.TelescopeOut();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_elev.stop();
+    m_telescope.stop();
   }
 
   // Returns true when the command should end.

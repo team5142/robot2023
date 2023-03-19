@@ -5,16 +5,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Swivel;
 
-public class SwivelDownMan extends CommandBase {
-  /** Creates a new SwivelDownMan. */
-  private final Swivel m_swivel;
-
-  public SwivelDownMan(Swivel swiv) {
+public class PlaceDumpLow extends CommandBase {
+  /** Creates a new PlaceDumpLow. */
+  public PlaceDumpLow() {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_swivel = swiv;
-    addRequirements(swiv);
   }
 
   // Called when the command is initially scheduled.
@@ -23,15 +18,11 @@ public class SwivelDownMan extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_swivel.swivelDown();
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_swivel.stop();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

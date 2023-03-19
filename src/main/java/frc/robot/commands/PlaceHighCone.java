@@ -5,16 +5,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Telescope;
 
-public class TelescopeOutMan extends CommandBase {
-  /** Creates a new TelescopeOutMan. */
-  private final Telescope m_telescope;
-
-  public TelescopeOutMan(Telescope tele) {
+public class PlaceHighCone extends CommandBase {
+  /** Creates a new PlaceHighCone. */
+  public PlaceHighCone() {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_telescope = tele;
-    addRequirements(tele);
   }
 
   // Called when the command is initially scheduled.
@@ -23,15 +18,11 @@ public class TelescopeOutMan extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_telescope.TelescopeOut();
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_telescope.stop();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
