@@ -11,15 +11,14 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.AutoDriveForward;
-import frc.robot.commands.ElevatorDownMan;
-import frc.robot.commands.ElevatorUpMan;
-import frc.robot.commands.SwivelDownMan;
-import frc.robot.commands.SwivelMid;
-import frc.robot.commands.SwivelUpMan;
-import frc.robot.commands.TelescopeInMan;
-import frc.robot.commands.TelescopeOutMan;
+import frc.robot.commands.ManElevatorDown;
+import frc.robot.commands.ManElevatorUp;
+import frc.robot.commands.ManSwivelDown;
+import frc.robot.commands.ManSwivelUp;
+import frc.robot.commands.ManTelescopeIn;
+import frc.robot.commands.ManTelescopeOut;
 import frc.robot.commands.ToggleButterfly;
-import frc.robot.commands.ToggleClaw;
+import frc.robot.commands.ToggleClawPiston;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
@@ -39,7 +38,7 @@ public class RobotContainer {
   private final Telescope m_tele = new Telescope();
   private final Claw m_claw = new Claw();
 
-  private final ParallelCommandGroup m_liftExtend = new ParallelCommandGroup(new SwivelUpMan(m_swivel), new TelescopeOutMan(m_tele));
+  private final ParallelCommandGroup m_liftExtend = new ParallelCommandGroup(new ManSwivelUp(m_swivel), new ManTelescopeOut(m_tele));
 
   private static Joystick driver = new Joystick(0);
   private static Joystick secDriver = new Joystick(1);
@@ -68,15 +67,14 @@ public class RobotContainer {
     final JoystickButton bButton = new JoystickButton(operator, 3);
 
     driverRightThumb.onTrue(new ToggleButterfly(m_drive));
-    rightTrig.whileTrue(new ElevatorUpMan(m_elevator));
-    rightBut.whileTrue(new ElevatorDownMan(m_elevator));
-    dpadUp.whileTrue(new SwivelUpMan(m_swivel));
+    rightTrig.whileTrue(new ManElevatorUp(m_elevator));
+    rightBut.whileTrue(new ManElevatorDown(m_elevator));
+    dpadUp.whileTrue(new ManSwivelUp(m_swivel));
     // dpadUp.whileTrue(m_liftExtend);
-    dpadDown.whileTrue(new SwivelDownMan(m_swivel));
-    dpadRight.whileTrue(new TelescopeOutMan(m_tele));
-    dpadLeft.whileTrue(new TelescopeInMan(m_tele));
-    aButton.whileTrue(new SwivelMid(m_swivel));
-    bButton.onTrue(new ToggleClaw(m_claw));
+    dpadDown.whileTrue(new ManSwivelDown(m_swivel));
+    dpadRight.whileTrue(new ManTelescopeOut(m_tele));
+    dpadLeft.whileTrue(new ManTelescopeIn(m_tele));
+    bButton.onTrue(new ToggleClawPiston(m_claw));
     
   }
 
