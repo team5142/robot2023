@@ -17,6 +17,7 @@ public class Telescope extends SubsystemBase {
 
   // Declare class variables
   private final TalonSRX m_telescope; // TalonSRX motor controller for the telescope arm
+
   private final PIDController m_controller; // PID controller for position control
 
   // Declare constants for PID controller and distance range

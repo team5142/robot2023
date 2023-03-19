@@ -11,6 +11,7 @@ import frc.robot.subsystems.Drivetrain;
 public class AutoDriveForward extends CommandBase {
   /** Creates a new AutoDriveForward. */
   private final Drivetrain m_drive;
+
   public AutoDriveForward(Drivetrain drive) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drive = drive;

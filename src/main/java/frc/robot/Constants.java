@@ -34,8 +34,6 @@ public final class Constants {
     private static final int lowSwivelAngle = 0;
     private static final int collectSwivelAngle = 0;
     private static final int genericSwivelAngle = 0;
-    private static final double kMinArmDistance = 0.0;
-    private static final double kMaxArmDistance = 20.0;
 
     public static final double armHoldingPowerDown = 0;
     public static final double armHoldingPowerMid = 0;
@@ -47,7 +45,6 @@ public final class Constants {
     public static final double elevHoldingPowerDown = 0;
     public static final double elevHoldingPowerMid = 0;
     public static final double elevHoldingPowerUp = 0.03;
-    
   }
 
   // follow CAN IDs in ascending order

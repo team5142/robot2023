@@ -5,9 +5,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Elevator;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Elevator;
 
 public class ManElevatorUp extends CommandBase {
   /** Creates a new ElevatorUpMan. */
@@ -33,10 +33,9 @@ public class ManElevatorUp extends CommandBase {
     double ePower = -RobotContainer.operator.getX();
     System.out.println(ePower);
 
-    if (ePower<ElevatorConstants.elevHoldingPowerUp) {
+    if (ePower < ElevatorConstants.elevHoldingPowerUp) {
 
       ePower = 0;
-
     }
     m_elev.elevatorUpPower(ePower);
   }

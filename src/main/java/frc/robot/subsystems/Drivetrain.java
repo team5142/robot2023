@@ -7,19 +7,20 @@ package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 import com.playingwithfusion.CANVenom;
 import com.playingwithfusion.CANVenom.BrakeCoastMode;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.SPI;
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
   private final CANVenom m_frontLeft;
+
   private final CANVenom m_frontRight;
   private final CANVenom m_backLeft;
   private final CANVenom m_backRight;
@@ -91,12 +92,13 @@ public class Drivetrain extends SubsystemBase {
     final double I = 0.0; // Integral gain
     final double D = 0.0; // Derivative gain
     final double toleranceAngle = 0.5; // Deadband tolerance in degrees
-  
-    double errorAngle = -m_navX.getPitch(); // Negative sign to make positive pitch angle tilt forward
+
+    double errorAngle =
+        -m_navX.getPitch(); // Negative sign to make positive pitch angle tilt forward
     double integral = 0.0;
     double derivative = 0.0;
     double previousErrorAngle = 0.0;
-  
+
     while (Math.abs(errorAngle) > toleranceAngle) {
       errorAngle = -m_navX.getPitch(); // Gets the pitch of the robot (Relative to zero)
 
@@ -106,19 +108,22 @@ public class Drivetrain extends SubsystemBase {
       double output = P * errorAngle + I * integral + D * derivative;
 
       output = MathUtil.clamp(output, -0.2, 0.2); // Limit output to -20% to +20% speed
-  
-      // Set all four motors to run at the same output in mecanum drive formation (Only going forwards/backwards)
+
+      // Set all four motors to run at the same output in mecanum drive formation (Only going
+      // forwards/backwards)
       m_drive.driveCartesian(output, 0.0, 0.0);
-  
-      previousErrorAngle = errorAngle; // Updates the hierarchy, running through the method again (Until balance is acheived)
+
+      previousErrorAngle =
+          errorAngle; // Updates the hierarchy, running through the method again (Until balance is
+      // acheived)
 
       Timer.delay(0.02); // Wait 20 ms before checking again
     }
-  
+
     // Stop motors after reaching balance
     m_drive.driveCartesian(0.0, 0.0, 0.0);
   }
-  
+
   public void toggleFieldOrientation() {
     m_isFieldOriented = !m_isFieldOriented;
     if (m_isFieldOriented) {
@@ -127,15 +132,15 @@ public class Drivetrain extends SubsystemBase {
     }
   }
 
-public void drive(double xSpeed, double ySpeed, double rot) {
-  Rotation2d rotation2d;
-  if (m_isFieldOriented) {
+  public void drive(double xSpeed, double ySpeed, double rot) {
+    Rotation2d rotation2d;
+    if (m_isFieldOriented) {
       rotation2d = Rotation2d.fromDegrees(m_referenceAngle);
-  } else {
+    } else {
       rotation2d = Rotation2d.fromDegrees(m_navX.getAngle());
+    }
+    m_drive.driveCartesian(-xSpeed, ySpeed, rot, rotation2d);
   }
-  m_drive.driveCartesian(-xSpeed, ySpeed, rot, rotation2d);
-}
 
   @Override
   public void periodic() {

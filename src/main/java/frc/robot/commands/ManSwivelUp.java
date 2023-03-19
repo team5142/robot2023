@@ -5,8 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Swivel;
 
 public class ManSwivelUp extends CommandBase {
@@ -33,10 +33,9 @@ public class ManSwivelUp extends CommandBase {
     double power = -RobotContainer.operator.getY();
     System.out.println(power);
 
-    if (power<ArmConstants.armHoldingPowerUp) {
+    if (power < ArmConstants.armHoldingPowerUp) {
 
       power = 0;
-
     }
     m_swivel.swivelUpPower(power);
   }

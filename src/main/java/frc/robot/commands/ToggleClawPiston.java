@@ -12,6 +12,7 @@ import frc.robot.subsystems.Claw;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ToggleClawPiston extends InstantCommand {
   private final Claw m_claw;
+
   public ToggleClawPiston(Claw claw) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_claw = claw;

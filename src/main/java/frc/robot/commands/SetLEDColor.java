@@ -4,13 +4,14 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ledStrip;
 
 public class SetLEDColor extends CommandBase {
   /** Creates a new SetLEDColor. */
   private final ledStrip m_ledStrip;
+
   private final Color m_color = new Color(255, 255, 0); // Yellow (For Now)
 
   public SetLEDColor(ledStrip ledStrip) {

@@ -9,7 +9,6 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,11 +18,17 @@ public class Swivel extends SubsystemBase {
   /** Creates a new Swivel. */
 
   // All Cone/Cube reference angles (For placement)
-  private double groundCollectSwivelAngle = 0; // Swivel angle for ground collection 
-  private double substationCollectSwivelAngle = 0; // Swivel angle for double substation collection
+  private double groundCollectSwivelAngle = 0; // Swivel angle for ground collection
+
+  private double singleSubstationCollectSwivelAngle =
+      0; // Swivel angle for single substation collection
+  private double doubleSubstationCollectSwivelAngle =
+      0; // Swivel angle for double substation collection
   private double lowSwivelAngle = 0; // Swivel Angle for low hub (Cone/Cube)
-  private double midSwivelAngle = 0; // Swivel Angle for mid hub (Cone/Cube)
-  private double highSwivelAngle = 0; // Swivel Angle for high hub (Cone/Cube)
+  private double midConeSwivelAngle = 0; // Swivel Angle for mid hub (Cone/Cube)
+  private double highConeSwivelAngle = 0; // Swivel Angle for high hub (Cone/Cube)
+  private double midCubeSwivelAngle = 0; // Swivel Angle for mid hub (Cone/Cube)
+  private double highCubeSwivelAngle = 0; // Swivel Angle for high hub (Cone/Cube)
 
   // The TalonSRX motor controller that controls the swivel motion.
   private final CANSparkMax m_swivel;
@@ -64,20 +69,36 @@ public class Swivel extends SubsystemBase {
     m_targetPosition = lowSwivelAngle; // Set the target position to the low hub angle
   }
 
-  public void swivelMid() {
-    m_targetPosition = midSwivelAngle; // Set the target position to the mid hub angle
+  public void swivelConeMid() {
+    m_targetPosition = midConeSwivelAngle; // Set the target position to the mid hub angle
   }
 
-  public void swivelHigh() {
-    m_targetPosition = highSwivelAngle; // Set the target position to the high hub angle
+  public void swivelConeHigh() {
+    m_targetPosition = highConeSwivelAngle; // Set the target position to the high hub angle
+  }
+
+  public void swivelCubeMid() {
+    m_targetPosition = midCubeSwivelAngle; // Set the target position to the mid hub angle
+  }
+
+  public void swivelCubeHigh() {
+    m_targetPosition = highCubeSwivelAngle; // Set the target position to the high hub angle
   }
 
   public void swivelGroundCollect() {
     m_targetPosition = groundCollectSwivelAngle; // Set the target position to the ground angle
   }
 
-  public void swivelSubstationCollect() {
-    m_targetPosition = substationCollectSwivelAngle; // Set the target position to the double substation angle
+  public void swivelSingleSubstationCollect() {
+    m_targetPosition =
+        singleSubstationCollectSwivelAngle; // Set the target position to the double substation
+    // angle
+  }
+
+  public void swivelDoubleSubstationCollect() {
+    m_targetPosition =
+        doubleSubstationCollectSwivelAngle; // Set the target position to the double substation
+    // angle
   }
 
   public double getEncoder() {
@@ -85,7 +106,10 @@ public class Swivel extends SubsystemBase {
   }
 
   public void initialize() {
-    m_encoder.setPosition(m_controller.calculate(m_encoder.getPosition(), 0)); // Initializes the encoder at a set position (Needs some tweaking)
+    m_encoder.setPosition(
+        m_controller.calculate(
+            m_encoder.getPosition(),
+            0)); // Initializes the encoder at a set position (Needs some tweaking)
   }
 
   public void setPosition(double position) {
@@ -94,15 +118,19 @@ public class Swivel extends SubsystemBase {
     m_targetPosition = position;
 
     // Set the setpoint of the PID controller to the target position
-    m_controller.setSetpoint(m_targetPosition); 
+    m_controller.setSetpoint(m_targetPosition);
 
     // Reset the velocity of the motor controller to 0
     m_swivel.getPIDController().setReference(0, ControlType.kVelocity);
 
     // Set the reference velocity of the motor controller to the output of the PID controller
-    m_swivel.getPIDController().setReference(m_controller.calculate(m_encoder.getPosition(), m_targetPosition), ControlType.kVelocity);
+    m_swivel
+        .getPIDController()
+        .setReference(
+            m_controller.calculate(m_encoder.getPosition(), m_targetPosition),
+            ControlType.kVelocity);
   }
-  
+
   @Override
   public void periodic() {
     SmartDashboard.putNumber("SwivelEnc", getEncoder()); // For testing

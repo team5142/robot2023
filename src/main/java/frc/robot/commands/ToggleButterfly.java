@@ -12,6 +12,7 @@ import frc.robot.subsystems.Drivetrain;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ToggleButterfly extends InstantCommand {
   private final Drivetrain m_drive;
+
   public ToggleButterfly(Drivetrain drive) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drive = drive;
