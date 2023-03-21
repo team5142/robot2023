@@ -17,18 +17,12 @@ public class Swivel extends SubsystemBase {
 
   /** Creates a new Swivel. */
 
-  // All Cone/Cube reference angles (For placement)
-  private double groundCollectSwivelAngle = 0; // Swivel angle for ground collection
+  // All reference angles (For placement/collection)
+  private double groundSwivelAngle = 0; // Swivel angle for ground collection
 
-  private double singleSubstationCollectSwivelAngle =
-      0; // Swivel angle for single substation collection
-  private double doubleSubstationCollectSwivelAngle =
-      0; // Swivel angle for double substation collection
-  private double lowSwivelAngle = 0; // Swivel Angle for low hub (Cone/Cube)
-  private double midConeSwivelAngle = 0; // Swivel Angle for mid hub (Cone/Cube)
-  private double highConeSwivelAngle = 0; // Swivel Angle for high hub (Cone/Cube)
-  private double midCubeSwivelAngle = 0; // Swivel Angle for mid hub (Cone/Cube)
-  private double highCubeSwivelAngle = 0; // Swivel Angle for high hub (Cone/Cube)
+  private double singleSubSwivelAngle = 0; // Swivel angle for single substation collection
+
+  private double straightSwivelAngle = 0; // Swivel angle for double substation collection
 
   // The TalonSRX motor controller that controls the swivel motion.
   private final CANSparkMax m_swivel;
@@ -65,40 +59,17 @@ public class Swivel extends SubsystemBase {
     m_swivel.set(0); // Sets motor speed to 0
   }
 
-  public void swivelLow() {
-    m_targetPosition = lowSwivelAngle; // Set the target position to the low hub angle
-  }
-
-  public void swivelConeMid() {
-    m_targetPosition = midConeSwivelAngle; // Set the target position to the mid hub angle
-  }
-
-  public void swivelConeHigh() {
-    m_targetPosition = highConeSwivelAngle; // Set the target position to the high hub angle
-  }
-
-  public void swivelCubeMid() {
-    m_targetPosition = midCubeSwivelAngle; // Set the target position to the mid hub angle
-  }
-
-  public void swivelCubeHigh() {
-    m_targetPosition = highCubeSwivelAngle; // Set the target position to the high hub angle
-  }
-
-  public void swivelGroundCollect() {
-    m_targetPosition = groundCollectSwivelAngle; // Set the target position to the ground angle
+  public void swivelGround() {
+    m_targetPosition = groundSwivelAngle; // Set the target position to the ground angle
   }
 
   public void swivelSingleSubstationCollect() {
-    m_targetPosition =
-        singleSubstationCollectSwivelAngle; // Set the target position to the double substation
+    m_targetPosition = singleSubSwivelAngle; // Set the target position to the single substation
     // angle
   }
 
-  public void swivelDoubleSubstationCollect() {
-    m_targetPosition =
-        doubleSubstationCollectSwivelAngle; // Set the target position to the double substation
-    // angle
+  public void swivelStraight() {
+    m_targetPosition = straightSwivelAngle; // Set the target position to be parallel to the ground
   }
 
   public double getEncoder() {
