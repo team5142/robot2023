@@ -49,12 +49,8 @@ public class Elevator extends SubsystemBase {
     m_elevator.setPosition(1000);
   }
 
-  public void manualUp() {
-    m_elevator.set(0.40);
-  }
-
-  public void manualDown() {
-    m_elevator.set(-0.15);
+  public void setSpeed(double speed){
+    m_elevator.set(speed);
   }
 
   //  public void elevatorMovement(double upSpeed, double downSpeed) {
@@ -78,5 +74,8 @@ public class Elevator extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("ElevatorEnc", getEncoder());
     SmartDashboard.putBoolean("ElevatorLimt", m_limit.get());
+  }
+
+  public static void set(double speed) {
   }
 }
