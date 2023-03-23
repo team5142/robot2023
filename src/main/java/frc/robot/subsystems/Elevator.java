@@ -76,5 +76,4 @@ public class Elevator extends SubsystemBase {
     SmartDashboard.putBoolean("ElevatorLimt", m_limit.get());
   }
 
-  public static void set(double speed) {}
 }
