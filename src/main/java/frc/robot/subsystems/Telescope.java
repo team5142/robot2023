@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Telescope extends SubsystemBase {
@@ -19,9 +20,9 @@ public class Telescope extends SubsystemBase {
   // All reference points (For placement/collection)
   private double shortTelescopeLength = 0; // Telescope length for short setpoint
 
-  private double midTelescopeLength = 0; // Telescope length for mid setpoint
+  private double midTelescopeLength = 1; // Telescope length for mid setpoint
 
-  private double longTelescopeLength = 0; // Telescope length for long setpoint
+  private double longTelescopeLength = 2; // Telescope length for long setpoint
 
   // Declare class variables
   private final TalonSRX m_telescope; // TalonSRX motor controller for the telescope arm
@@ -87,5 +88,7 @@ public class Telescope extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Encoder Ticks", m_encoder.get());
+    SmartDashboard.putNumber("Distance", m_encoder.getDistance());
   }
 }
