@@ -40,7 +40,7 @@ public class ManElevator extends CommandBase {
     m_elev.elevatorUpPower(ePower);
 
     double speed = -RobotContainer.operator.getY();
-    Elevator.set(speed);
+    m_elev.setSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
