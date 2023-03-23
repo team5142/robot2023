@@ -9,7 +9,6 @@ import frc.robot.Constants.ElevatorConstants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Elevator;
 
-
 public class ManElevator extends CommandBase {
   /** Creates a new ElevatorUpMan. */
   private final Elevator m_elev;
@@ -41,7 +40,7 @@ public class ManElevator extends CommandBase {
     m_elev.elevatorUpPower(ePower);
 
     double speed = -RobotContainer.operator.getY();
-        Elevator.set(speed);
+    Elevator.set(speed);
   }
 
   // Called once the command ends or is interrupted.

@@ -49,7 +49,7 @@ public class Elevator extends SubsystemBase {
     m_elevator.setPosition(1000);
   }
 
-  public void setSpeed(double speed){
+  public void setSpeed(double speed) {
     m_elevator.set(speed);
   }
 
@@ -76,6 +76,5 @@ public class Elevator extends SubsystemBase {
     SmartDashboard.putBoolean("ElevatorLimt", m_limit.get());
   }
 
-  public static void set(double speed) {
-  }
+  public static void set(double speed) {}
 }
